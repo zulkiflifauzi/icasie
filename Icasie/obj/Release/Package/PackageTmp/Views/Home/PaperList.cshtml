@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Icasie.Models.ViewModelSubmission>
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Paper List - ICASIE</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+    <link rel="icon" href="http://icasie.its.ac.id/wp-content/uploads/2016/12/cropped-its-32x32.png" sizes="32x32" />
+</head>
+<body>
+    <section>
+        <div class="container body-content" style="margin-top:-75px">
+            <div>
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th>
+                            No
+                        </th>
+                        <th>
+                            Author
+                        </th>
+                        <th>
+                            Paper Title
+                        </th>
+                        <th>
+                            Institution
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AuthorName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Institution)
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+

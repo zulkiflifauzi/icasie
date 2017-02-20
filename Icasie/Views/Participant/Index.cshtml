@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Icasie.Models.ViewModelConference>
+
+@{
+    ViewBag.Title = "Participations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h1>Participations</h1>
+</div>
+
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <h3 style="font-style:italic">@item.Name</h3>
+            @if (item.Participants.Count == 0)
+            { 
+                <a href="/Participant/Register/@item.ConferenceId" class="btn btn-primary">Register</a>
+            }
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Number
+                    </th>
+                    <th>
+                        Total Payment ($)
+                    </th>
+                    <th>
+                        Payment
+                    </th>
+                    <th>
+                        Payment Status
+                    </th>
+                    <th>
+                        Payment Date
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var abs in item.Participants)
+                {
+                    <tr>
+                        <td>@abs.Number</td>
+                        <td>@abs.TotalPayment</td>
+                        <td><a class="btn btn-primary" href="/Submission/Download/@abs.ParticipantId?type=@Icasie.Helper.Constant.DownloadType.ParticipantPayment">View</a></td>
+                        <td>@abs.PaymentStatus</td>
+                        <td>@abs.PaymentDate</td>
+                        <td>
+                            @if (abs.PaymentStatus.Equals(Icasie.Helper.Constant.PaymentStatus.Submitted))
+                            {   
+                                <a class="btn btn-primary" href="/Participant/ChangePayment/@abs.ParticipantId">Change</a>
+                            }
+                        </td>
+                </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+}

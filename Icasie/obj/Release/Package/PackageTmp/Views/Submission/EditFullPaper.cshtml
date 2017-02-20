@@ -1,0 +1,112 @@
+﻿@model Icasie.Models.ViewModelSubmission
+
+@{
+    ViewBag.Title = "Edit Paper";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Full Paper</h2>
+
+
+@using (Html.BeginForm("EditFullPaper", "Submission", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" }, })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Sub Theme", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SubThemesId, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SubThemesId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Upload Paper", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <label class="btn btn-default btn-file">
+                    <input accept="application/pdf" name="file" id="file" type="file" />
+                </label>
+                <br />@Html.ValidationMessage("file")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Co Authors", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CoAuthors, new { htmlAttributes = new { @class = "form-control payment-control", @type = "number", @value = "0" }, })
+                @Html.ValidationMessageFor(model => model.CoAuthors)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Payment Type", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="radio" class="payment-control" id="paymentType" name="paymentType" value="1"> Conference & IOP Proceeding<br>
+                <input type="radio" class="payment-control" id="paymentType" name="paymentType" value="2"> Conference & Icasie Proceeding<br>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Total Payment", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <span id="total-payment" style="color:green;font-weight:bold">US$ 0</span>
+            </div>
+        </div>
+        @Html.Hidden("id", Model.SubmissionId)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[name=paymentType][value=@Model.PaymentType]').prop('checked', 'checked');
+
+            $(".payment-control").change(function () {
+                calculateAmount();
+            });
+
+            calculateAmount();
+        });
+
+        function calculateAmount()
+        {
+            var full = parseFloat("@ViewData["Full"]");
+            var seminar = parseFloat("@ViewData["Seminar"]");
+            var coauthor = parseFloat("@ViewData["Coauthor"]");
+
+            var total = 0;
+
+            if ($('input[name=paymentType]:checked').val() == "1") {
+                total += full;
+            }
+            else {
+                total += seminar;
+            }
+            
+            total += (coauthor * $("#CoAuthors").val());
+
+            $("#total-payment").text("US$ " + total.toString());
+        }
+
+    </script>
+
+}

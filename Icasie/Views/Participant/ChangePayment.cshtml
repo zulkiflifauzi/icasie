@@ -1,0 +1,48 @@
+﻿@model Icasie.Models.ViewModelParticipant
+
+@{
+    ViewBag.Title = "Change Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Change Payment</h2>
+
+
+@using (Html.BeginForm("ChangePayment", "Participant", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            @Html.Label("Total Payment", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                USD @ViewData["Fee"]
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Upload Payment Evidence", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <label class="btn btn-default btn-file">
+                    <input accept="application/pdf" name="payment" id="payment" type="file" />
+                </label>
+                <br />@Html.ValidationMessage("payment")
+            </div>
+        </div>
+        @Html.Hidden("id", ViewData["ConferenceId"])
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

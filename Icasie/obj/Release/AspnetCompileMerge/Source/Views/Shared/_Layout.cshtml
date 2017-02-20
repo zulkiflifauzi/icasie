@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ICASIE</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="icon" href="http://icasie.its.ac.id/wp-content/uploads/2016/12/cropped-its-32x32.png" sizes="32x32" />
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="/Content/Images/itslogo.png" style="width: 100px; margin: 0 auto; padding-top:5px; padding-bottom:5px" class="img-responsive" />
+            </div>
+            <div style="padding-top:25px; font-size:1.3em" class="navbar-collapse collapse navbar-right">
+                <ul class="nav navbar-nav">
+                    @if(User.IsInRole("Administrator") || User.IsInRole("Reviewer"))
+                    {
+                        <li>@Html.ActionLink("Conferences", "Index", "Conference")</li>
+                    }
+                    @if(User.IsInRole("Author"))
+                    {
+                        <li>@Html.ActionLink("Submissions", "Index", "Submission")</li>
+                    }
+                    @if(User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Change Password", "ChangePassword", "Login")</li>
+                        <li>@Html.ActionLink("Logoff", "Logoff", "Login")</li>
+                    }
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - ICASIE</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datepicker")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

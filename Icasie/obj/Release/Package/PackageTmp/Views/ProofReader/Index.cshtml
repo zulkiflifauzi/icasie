@@ -1,0 +1,249 @@
+﻿@model IEnumerable<Icasie.Models.ViewModelConference>
+
+@{
+    ViewBag.Title = "Review List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h1>Proof Reads</h1>
+</div>
+
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <h3>@item.Name</h3>
+        <table class="table table-result">
+            <thead>
+                <tr>
+                    <th>
+                        Author
+                    </th>
+                    <th>
+                        Number
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Sub Theme
+                    </th>
+                    <th>
+                        Full Paper
+                    </th>
+                    <th>
+                        Full Paper Upload Date
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Proof Reading Result
+                    </th>
+                    <th>
+                        Proof Reader
+                    </th>
+                    <th>
+                        Proof Reading Date
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @*<tr>
+                        <td colspan="14"><h3><i>Waiting for Review</i></h3></td>
+                    </tr>
+                    @foreach (var abs in item.Submissions.Where(c => c.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Pending ))
+                    {
+                        <tr>
+                            <td>@abs.AuthorName</td>
+                            <td>@abs.Number</td>
+                            <td>@abs.Title</td>
+                            <td>@abs.SubThemes</td>
+                            <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
+                            <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
+                            <td>@abs.FullPaperStatus</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>@abs.Comment</td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                    <a class="btn btn-warning" href="/Reviewer/Edit/@abs.SubmissionId">Review</a>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="14"><h3><i>Waiting for Revision</i></h3></td>
+                    </tr>*@
+                @foreach (var abs in item.Submissions)
+                {
+                    <tr>
+                        <td>@abs.AuthorName</td>
+                        <td>@abs.Number</td>
+                        <td>@abs.Title</td>
+                        <td>@abs.SubThemes</td>
+                        <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
+                        <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
+                        <td>@abs.FullPaperStatus</td>
+                        <td>@((abs.ProofReaderResultFileName != null) ? Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.ProofReading }, new { @class = "btn btn-primary" }) : Html.Raw(""))</td>
+                        <td>@abs.ProofReaderName</td>
+                        <td>@abs.ProofReadingDateString</td>
+                        <td>
+                            @if (abs.FullPaperStatus.Equals(Icasie.Helper.Constant.FullPaperStatus.Reviewed))
+                            {
+                                <a class="btn btn-warning" href="/ProofReader/Edit/@abs.SubmissionId">Proof Read</a>
+                            }
+                        </td>
+                    </tr>
+                }
+                @*<tr>
+                        <td colspan="14"><h3><i>Accepted</i></h3></td>
+                    </tr>
+                    @foreach (var abs in item.Submissions.Where(c => c.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Accepted))
+                    {
+                        <tr>
+                            <td>@abs.AuthorName</td>
+                            <td>@abs.Number</td>
+                            <td>@abs.Title</td>
+                            <td>@abs.SubThemes</td>
+                            <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
+                            <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
+                            <td>@abs.FullPaperStatus</td>
+                            <td></td>
+                            <td>@abs.ReviewerName</td>
+                            <td>@abs.ReviewDateString</td>
+                            <td>@abs.Comment</td>
+                            <td>@((abs.PaymentDate.HasValue) ? Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Payment }, new { @class = "btn btn-primary" }) : Html.Raw(""))</td>
+                            <td>@((abs.PaymentDate.HasValue) ? Html.Raw(abs.PaymentDate.Value.ToString(Icasie.Helper.Constant.DateFormat)) : Html.Raw(""))</td>
+                            <td>@(abs.PaymentDate.HasValue ? Html.ActionLink("Verify Payment", "VerifyPayment", "Reviewer", new { @id = abs.SubmissionId }, new { @class = "btn btn-warning" }) : Html.Raw(""))</td>
+                        </tr>
+                    }
+
+                    <tr>
+                        <td colspan="14"><h3><i>Payment Verified</i></h3></td>
+                    </tr>
+                    @foreach (var abs in item.Submissions.Where(c => c.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.PaymentVerified))
+                    {
+                        <tr>
+                            <td>@abs.AuthorName</td>
+                            <td>@abs.Number</td>
+                            <td>@abs.Title</td>
+                            <td>@abs.SubThemes</td>
+                            <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
+                            <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
+                            <td>@abs.FullPaperStatus</td>
+                            <td></td>
+                            <td>@abs.ReviewerName</td>
+                            <td>@abs.ReviewDateString</td>
+                            <td>@abs.Comment</td>
+                            <td>@((abs.PaymentDate.HasValue) ? Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Payment }, new { @class = "btn btn-primary" }) : Html.Raw(""))</td>
+                            <td>@((abs.PaymentDate.HasValue) ? Html.Raw(abs.PaymentDate.Value.ToString(Icasie.Helper.Constant.DateFormat)) : Html.Raw(""))</td>
+                            <td></td>
+                        </tr>
+                    }
+
+                    <tr>
+                        <td colspan="14"><h3><i>Rejected</i></h3></td>
+                    </tr>
+                    @foreach (var abs in item.Submissions.Where(c => c.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Rejected))
+                    {
+                        <tr>
+                            <td>@abs.AuthorName</td>
+                            <td>@abs.Number</td>
+                            <td>@abs.Title</td>
+                            <td>@abs.SubThemes</td>
+                            <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
+                            <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
+                            <td>@abs.FullPaperStatus</td>
+                            <td></td>
+                            <td>@abs.ReviewerName</td>
+                            <td>@abs.ReviewDateString</td>
+                            <td>@abs.Comment</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    }*@
+
+            </tbody>
+
+        </table>
+
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.table-result').DataTable({
+                initComplete: function () {
+                    this.api().columns().every(function (index) {
+                        if (index == 6) {
+                            var column = this;
+                            var select = $('<select><option value=""></option></select>')
+                                .appendTo($(column.footer()).empty())
+                                .on('change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+
+                                    column
+                                        .search(val ? '^' + val + '$' : '', true, false)
+                                        .draw();
+                                });
+
+                            column.data().unique().sort().each(function (d, j) {
+                                select.append('<option value="' + d + '">' + d + '</option>')
+                            });
+                        }
+
+                    });
+                }
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Icasie.Models.ViewModelConference>
+
+@{
+    ViewBag.Title = "Participations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h1>Participations</h1>
+</div>
+
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <h3 style="font-style:italic">@item.Name</h3>
+        <table id="example" class="table table-striped table-result" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Number
+                    </th>
+                    <th>
+                        Total Payment ($)
+                    </th>
+                    <th>
+                        Payment
+                    </th>
+                    <th>
+                        Payment Status
+                    </th>
+                    <th>
+                        Payment Date
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </tfoot>
+            <tbody>
+
+                @foreach (var abs in item.Participants)
+                {
+                    <tr>
+                        <td>@abs.Name</td>
+                        <td>@abs.Number</td>
+                        <td>@abs.TotalPayment</td>
+                        <td><a class="btn btn-primary" href="/Submission/Download/@abs.ParticipantId?type=@Icasie.Helper.Constant.DownloadType.ParticipantPayment">View</a></td>
+                        <td>@abs.PaymentStatus</td>
+                        <td>@abs.PaymentDate</td>
+                        <td>
+                            @if (abs.PaymentStatus.Equals(Icasie.Helper.Constant.PaymentStatus.Submitted))
+                            {
+                                <a class="btn btn-primary" href="/Administration/VerifyPaymentParticipant/@abs.ParticipantId?status=@Icasie.Helper.Constant.PaymentStatus.Accepted&conferenceId=@abs.ConferenceId">Approve</a>
+                                <a class="btn btn-danger" href="/Administration/VerifyPaymentParticipant/@abs.ParticipantId?status=@Icasie.Helper.Constant.PaymentStatus.Rejected&conferenceId=@abs.ConferenceId">Reject</a>
+                            }
+                            <a class="btn btn-warning" href="/User/Profile/@abs.UserId">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+}
+
+@section Scripts {
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.table-result').DataTable({
+            initComplete: function () {
+                this.api().columns().every(function (index) {
+                    if (index == 3) {
+                        var column = this;
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    }
+                    
+                });
+            }
+        });
+    });
+
+</script>
+    
+    }

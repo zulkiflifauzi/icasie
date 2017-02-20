@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Icasie.Models.ViewModelConference>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Conference List</h2>
+@if (TempData["message"] != null)
+{
+    <label style="color:red;font-style:italic">@TempData["message"]</label>
+}
+
+<table id="example" class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th>
+                Full Paper Submission Start Date
+            </th>
+            <th>
+                Full Paper Submission End Date
+            </th>
+            <th>
+                Full Paper Submission Status
+            </th>
+            <th width="300px">Action</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th></th>
+        </tr>
+    </tfoot>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.Raw(item.StartDate.ToString(Icasie.Helper.Constant.DateFormat))
+                </td>
+                <td>
+                    @Html.Raw(item.EndDate.ToString(Icasie.Helper.Constant.DateFormat))
+                </td>
+                <td>
+                    @Html.Raw(item.PaperSubStartDate.ToString(Icasie.Helper.Constant.DateFormat))
+                </td>
+                <td>
+                    @Html.Raw(item.PaperSubEndDate.ToString(Icasie.Helper.Constant.DateFormat))
+                </td>
+                <td>
+                    @(item.PaperSubActive ? Html.Raw("Opened") : Html.Raw("Closed"))
+                </td>
+                <td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        @Html.ActionLink("Authors Payment", "AuthorPayment", "Administration", new { id = item.ConferenceId }, new { @class = "btn btn-warning" })
+                        @Html.Raw("&nbsp;");
+                        @Html.ActionLink("Participants Payment", "ParticipantPayment", "Administration", new { id = item.ConferenceId }, new { @class = "btn btn-info" })
+                        
+                    }
+
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+
+    </script>
+}

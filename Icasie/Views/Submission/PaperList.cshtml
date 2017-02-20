@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Icasie.Models.ViewModelSubmission>
+
+@{
+    ViewBag.Title = "Paper List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewData["ConferenceName"] Paper List</h2>
+
+<table id="example" class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                No
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                Institution
+            </th>
+            <th>
+                Paper Title
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Reviewer
+            </th>
+            <th>
+                Proof Reader
+            </th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>
+               
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </tfoot>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Institution)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullPaperStatus)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReviewerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProofReaderName)
+                </td>
+            </tr>
+        }
+    </tbody>
+      
+
+</table>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable({
+                initComplete: function () {
+                    this.api().columns().every(function (index) {
+                        if (index == 4 || index == 5 || index == 6) {
+                            var column = this;
+                            var select = $('<select><option value=""></option></select>')
+                                .appendTo($(column.footer()).empty())
+                                .on('change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+
+                                    column
+                                        .search(val ? '^' + val + '$' : '', true, false)
+                                        .draw();
+                                });
+
+                            column.data().unique().sort().each(function (d, j) {
+                                select.append('<option value="' + d + '">' + d + '</option>')
+                            });
+                        }
+
+                    });
+                }
+            });
+        });
+
+    </script>
+}
+
+

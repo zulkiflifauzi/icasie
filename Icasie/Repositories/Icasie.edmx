@@ -1,0 +1,592 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="icasieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Conferences">
+          <Key>
+            <PropertyRef Name="ConferenceId" />
+          </Key>
+          <Property Name="ConferenceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="PaperSubStartDate" Type="date" Nullable="false" />
+          <Property Name="PaperSubEndDate" Type="date" Nullable="false" />
+          <Property Name="LastSequenceNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastParticipantNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fees">
+          <Key>
+            <PropertyRef Name="FeeId" />
+          </Key>
+          <Property Name="FeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Participants">
+          <Key>
+            <PropertyRef Name="ParticipantId" />
+          </Key>
+          <Property Name="ParticipantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ConferenceId" Type="int" Nullable="false" />
+          <Property Name="Payment" Type="varbinary(max)" Nullable="false" />
+          <Property Name="PaymentFileName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PaymentDate" Type="date" Nullable="false" />
+          <Property Name="Number" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalPayment" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Submissions">
+          <Key>
+            <PropertyRef Name="SubmissionId" />
+          </Key>
+          <Property Name="SubmissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ConferenceId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FullPaperStatus" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FullPaper" Type="varbinary(max)" />
+          <Property Name="FullPaperFileName" Type="nvarchar(max)" />
+          <Property Name="FullPaperDate" Type="date" />
+          <Property Name="Payment" Type="varbinary(max)" />
+          <Property Name="PaymentFileName" Type="nvarchar(max)" />
+          <Property Name="PaymentDate" Type="date" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="ReviewedBy" Type="int" />
+          <Property Name="ReviewDate" Type="date" />
+          <Property Name="FullPaperReview" Type="varbinary(max)" />
+          <Property Name="FullPaperReviewFileName" Type="nvarchar(max)" />
+          <Property Name="FullPaperReview2" Type="varbinary(max)" />
+          <Property Name="FullPaperReviewFileName2" Type="nvarchar(max)" />
+          <Property Name="FullPaperReview3" Type="varbinary(max)" />
+          <Property Name="FullPaperReviewFileName3" Type="nvarchar(max)" />
+          <Property Name="PaperNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubThemesId" Type="int" Nullable="false" />
+          <Property Name="CoAuthors" Type="int" Nullable="false" />
+          <Property Name="PaymentType" Type="int" Nullable="false" />
+          <Property Name="TotalPayment" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ProofReadingResult" Type="varbinary(max)" />
+          <Property Name="ProofReadingResultFileName" Type="nvarchar(max)" />
+          <Property Name="ProofReaderId" Type="int" />
+          <Property Name="ProofReadingDate" Type="date" />
+          <Property Name="PaymentVerificationDate" Type="date" />
+          <Property Name="TermsAgreement" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubThemes">
+          <Key>
+            <PropertyRef Name="SubThemesId" />
+          </Key>
+          <Property Name="SubThemesId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Salt" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="StreetAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Institution" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Participants_Conferences">
+          <End Role="Conferences" Type="Self.Conferences" Multiplicity="1" />
+          <End Role="Participants" Type="Self.Participants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conferences">
+              <PropertyRef Name="ConferenceId" />
+            </Principal>
+            <Dependent Role="Participants">
+              <PropertyRef Name="ConferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participants_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Participants" Type="Self.Participants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Participants">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submissions_Conferences">
+          <End Role="Conferences" Type="Self.Conferences" Multiplicity="1" />
+          <End Role="Submissions" Type="Self.Submissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conferences">
+              <PropertyRef Name="ConferenceId" />
+            </Principal>
+            <Dependent Role="Submissions">
+              <PropertyRef Name="ConferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submissions_SubThemes">
+          <End Role="SubThemes" Type="Self.SubThemes" Multiplicity="1" />
+          <End Role="Submissions" Type="Self.Submissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubThemes">
+              <PropertyRef Name="SubThemesId" />
+            </Principal>
+            <Dependent Role="Submissions">
+              <PropertyRef Name="SubThemesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submissions_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Submissions" Type="Self.Submissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Submissions">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submissions_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Submissions" Type="Self.Submissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Submissions">
+              <PropertyRef Name="ReviewedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submissions_Users2">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Submissions" Type="Self.Submissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Submissions">
+              <PropertyRef Name="ProofReaderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="icasieModelStoreContainer">
+          <EntitySet Name="Conferences" EntityType="Self.Conferences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fees" EntityType="Self.Fees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participants" EntityType="Self.Participants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Submissions" EntityType="Self.Submissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubThemes" EntityType="Self.SubThemes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Participants_Conferences" Association="Self.FK_Participants_Conferences">
+            <End Role="Conferences" EntitySet="Conferences" />
+            <End Role="Participants" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participants_Users" Association="Self.FK_Participants_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Participants" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submissions_Conferences" Association="Self.FK_Submissions_Conferences">
+            <End Role="Conferences" EntitySet="Conferences" />
+            <End Role="Submissions" EntitySet="Submissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submissions_SubThemes" Association="Self.FK_Submissions_SubThemes">
+            <End Role="SubThemes" EntitySet="SubThemes" />
+            <End Role="Submissions" EntitySet="Submissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submissions_Users" Association="Self.FK_Submissions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Submissions" EntitySet="Submissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submissions_Users1" Association="Self.FK_Submissions_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Submissions" EntitySet="Submissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submissions_Users2" Association="Self.FK_Submissions_Users2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Submissions" EntitySet="Submissions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="icasieModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="IcasieEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Conferences" EntityType="icasieModel.Conference" />
+          <EntitySet Name="Fees" EntityType="icasieModel.Fee" />
+          <EntitySet Name="Participants" EntityType="icasieModel.Participant" />
+          <EntitySet Name="Submissions" EntityType="icasieModel.Submission" />
+          <EntitySet Name="SubThemes" EntityType="icasieModel.SubTheme" />
+          <EntitySet Name="Users" EntityType="icasieModel.User" />
+          <AssociationSet Name="FK_Participants_Conferences" Association="icasieModel.FK_Participants_Conferences">
+            <End Role="Conference" EntitySet="Conferences" />
+            <End Role="Participant" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submissions_Conferences" Association="icasieModel.FK_Submissions_Conferences">
+            <End Role="Conference" EntitySet="Conferences" />
+            <End Role="Submission" EntitySet="Submissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participants_Users" Association="icasieModel.FK_Participants_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Participant" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submissions_SubThemes" Association="icasieModel.FK_Submissions_SubThemes">
+            <End Role="SubTheme" EntitySet="SubThemes" />
+            <End Role="Submission" EntitySet="Submissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submissions_Users" Association="icasieModel.FK_Submissions_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Submission" EntitySet="Submissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submissions_Users1" Association="icasieModel.FK_Submissions_Users1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Submission" EntitySet="Submissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submissions_Users2" Association="icasieModel.FK_Submissions_Users2">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Submission" EntitySet="Submissions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Conference">
+          <Key>
+            <PropertyRef Name="ConferenceId" />
+          </Key>
+          <Property Name="ConferenceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PaperSubStartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PaperSubEndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LastSequenceNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastParticipantNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Participants" Relationship="icasieModel.FK_Participants_Conferences" FromRole="Conference" ToRole="Participant" />
+          <NavigationProperty Name="Submissions" Relationship="icasieModel.FK_Submissions_Conferences" FromRole="Conference" ToRole="Submission" />
+        </EntityType>
+        <EntityType Name="Fee">
+          <Key>
+            <PropertyRef Name="FeeId" />
+          </Key>
+          <Property Name="FeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Participant">
+          <Key>
+            <PropertyRef Name="ParticipantId" />
+          </Key>
+          <Property Name="ParticipantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ConferenceId" Type="Int32" Nullable="false" />
+          <Property Name="Payment" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="PaymentFileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPayment" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Conference" Relationship="icasieModel.FK_Participants_Conferences" FromRole="Participant" ToRole="Conference" />
+          <NavigationProperty Name="User" Relationship="icasieModel.FK_Participants_Users" FromRole="Participant" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Submission">
+          <Key>
+            <PropertyRef Name="SubmissionId" />
+          </Key>
+          <Property Name="SubmissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ConferenceId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullPaperStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FullPaper" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FullPaperFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullPaperDate" Type="DateTime" Precision="0" />
+          <Property Name="Payment" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="PaymentFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="0" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReviewedBy" Type="Int32" />
+          <Property Name="ReviewDate" Type="DateTime" Precision="0" />
+          <Property Name="FullPaperReview" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FullPaperReviewFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullPaperReview2" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FullPaperReviewFileName2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullPaperReview3" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FullPaperReviewFileName3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaperNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubThemesId" Type="Int32" Nullable="false" />
+          <Property Name="CoAuthors" Type="Int32" Nullable="false" />
+          <Property Name="PaymentType" Type="Int32" Nullable="false" />
+          <Property Name="TotalPayment" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ProofReadingResult" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProofReadingResultFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProofReaderId" Type="Int32" />
+          <Property Name="ProofReadingDate" Type="DateTime" Precision="0" />
+          <Property Name="PaymentVerificationDate" Type="DateTime" Precision="0" />
+          <Property Name="TermsAgreement" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Conference" Relationship="icasieModel.FK_Submissions_Conferences" FromRole="Submission" ToRole="Conference" />
+          <NavigationProperty Name="SubTheme" Relationship="icasieModel.FK_Submissions_SubThemes" FromRole="Submission" ToRole="SubTheme" />
+          <NavigationProperty Name="User" Relationship="icasieModel.FK_Submissions_Users" FromRole="Submission" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="icasieModel.FK_Submissions_Users1" FromRole="Submission" ToRole="User" />
+          <NavigationProperty Name="User2" Relationship="icasieModel.FK_Submissions_Users2" FromRole="Submission" ToRole="User" />
+        </EntityType>
+        <EntityType Name="SubTheme">
+          <Key>
+            <PropertyRef Name="SubThemesId" />
+          </Key>
+          <Property Name="SubThemesId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Submissions" Relationship="icasieModel.FK_Submissions_SubThemes" FromRole="SubTheme" ToRole="Submission" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Salt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="StreetAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Institution" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Participants" Relationship="icasieModel.FK_Participants_Users" FromRole="User" ToRole="Participant" />
+          <NavigationProperty Name="Submissions" Relationship="icasieModel.FK_Submissions_Users" FromRole="User" ToRole="Submission" />
+          <NavigationProperty Name="Submissions1" Relationship="icasieModel.FK_Submissions_Users1" FromRole="User" ToRole="Submission" />
+          <NavigationProperty Name="Submissions2" Relationship="icasieModel.FK_Submissions_Users2" FromRole="User" ToRole="Submission" />
+        </EntityType>
+        <Association Name="FK_Participants_Conferences">
+          <End Type="icasieModel.Conference" Role="Conference" Multiplicity="1" />
+          <End Type="icasieModel.Participant" Role="Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conference">
+              <PropertyRef Name="ConferenceId" />
+            </Principal>
+            <Dependent Role="Participant">
+              <PropertyRef Name="ConferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submissions_Conferences">
+          <End Type="icasieModel.Conference" Role="Conference" Multiplicity="1" />
+          <End Type="icasieModel.Submission" Role="Submission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conference">
+              <PropertyRef Name="ConferenceId" />
+            </Principal>
+            <Dependent Role="Submission">
+              <PropertyRef Name="ConferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participants_Users">
+          <End Type="icasieModel.User" Role="User" Multiplicity="1" />
+          <End Type="icasieModel.Participant" Role="Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Participant">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submissions_SubThemes">
+          <End Type="icasieModel.SubTheme" Role="SubTheme" Multiplicity="1" />
+          <End Type="icasieModel.Submission" Role="Submission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubTheme">
+              <PropertyRef Name="SubThemesId" />
+            </Principal>
+            <Dependent Role="Submission">
+              <PropertyRef Name="SubThemesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submissions_Users">
+          <End Type="icasieModel.User" Role="User" Multiplicity="1" />
+          <End Type="icasieModel.Submission" Role="Submission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Submission">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submissions_Users1">
+          <End Type="icasieModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="icasieModel.Submission" Role="Submission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Submission">
+              <PropertyRef Name="ReviewedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submissions_Users2">
+          <End Type="icasieModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="icasieModel.Submission" Role="Submission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Submission">
+              <PropertyRef Name="ProofReaderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="icasieModelStoreContainer" CdmEntityContainer="IcasieEntities">
+          <EntitySetMapping Name="Conferences">
+            <EntityTypeMapping TypeName="icasieModel.Conference">
+              <MappingFragment StoreEntitySet="Conferences">
+                <ScalarProperty Name="LastParticipantNumber" ColumnName="LastParticipantNumber" />
+                <ScalarProperty Name="LastSequenceNumber" ColumnName="LastSequenceNumber" />
+                <ScalarProperty Name="PaperSubEndDate" ColumnName="PaperSubEndDate" />
+                <ScalarProperty Name="PaperSubStartDate" ColumnName="PaperSubStartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ConferenceId" ColumnName="ConferenceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fees">
+            <EntityTypeMapping TypeName="icasieModel.Fee">
+              <MappingFragment StoreEntitySet="Fees">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FeeId" ColumnName="FeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participants">
+            <EntityTypeMapping TypeName="icasieModel.Participant">
+              <MappingFragment StoreEntitySet="Participants">
+                <ScalarProperty Name="TotalPayment" ColumnName="TotalPayment" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="PaymentFileName" ColumnName="PaymentFileName" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="ConferenceId" ColumnName="ConferenceId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ParticipantId" ColumnName="ParticipantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Submissions">
+            <EntityTypeMapping TypeName="icasieModel.Submission">
+              <MappingFragment StoreEntitySet="Submissions">
+                <ScalarProperty Name="TermsAgreement" ColumnName="TermsAgreement" />
+                <ScalarProperty Name="PaymentVerificationDate" ColumnName="PaymentVerificationDate" />
+                <ScalarProperty Name="ProofReadingDate" ColumnName="ProofReadingDate" />
+                <ScalarProperty Name="ProofReaderId" ColumnName="ProofReaderId" />
+                <ScalarProperty Name="ProofReadingResultFileName" ColumnName="ProofReadingResultFileName" />
+                <ScalarProperty Name="ProofReadingResult" ColumnName="ProofReadingResult" />
+                <ScalarProperty Name="TotalPayment" ColumnName="TotalPayment" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="CoAuthors" ColumnName="CoAuthors" />
+                <ScalarProperty Name="SubThemesId" ColumnName="SubThemesId" />
+                <ScalarProperty Name="PaperNumber" ColumnName="PaperNumber" />
+                <ScalarProperty Name="FullPaperReviewFileName3" ColumnName="FullPaperReviewFileName3" />
+                <ScalarProperty Name="FullPaperReview3" ColumnName="FullPaperReview3" />
+                <ScalarProperty Name="FullPaperReviewFileName2" ColumnName="FullPaperReviewFileName2" />
+                <ScalarProperty Name="FullPaperReview2" ColumnName="FullPaperReview2" />
+                <ScalarProperty Name="FullPaperReviewFileName" ColumnName="FullPaperReviewFileName" />
+                <ScalarProperty Name="FullPaperReview" ColumnName="FullPaperReview" />
+                <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
+                <ScalarProperty Name="ReviewedBy" ColumnName="ReviewedBy" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="PaymentFileName" ColumnName="PaymentFileName" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="FullPaperDate" ColumnName="FullPaperDate" />
+                <ScalarProperty Name="FullPaperFileName" ColumnName="FullPaperFileName" />
+                <ScalarProperty Name="FullPaper" ColumnName="FullPaper" />
+                <ScalarProperty Name="FullPaperStatus" ColumnName="FullPaperStatus" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ConferenceId" ColumnName="ConferenceId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubThemes">
+            <EntityTypeMapping TypeName="icasieModel.SubTheme">
+              <MappingFragment StoreEntitySet="SubThemes">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="SubThemesId" ColumnName="SubThemesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="icasieModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Institution" ColumnName="Institution" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

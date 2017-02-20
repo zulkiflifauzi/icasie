@@ -1,0 +1,44 @@
+﻿@model Icasie.Models.ViewModelSubmission
+
+@{
+    ViewBag.Title = "Review Paper";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Full Paper</h2>
+
+
+@using (Html.BeginForm("SubmitPayment", "Submission", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+       
+        <div class="form-group">
+            @Html.Label("Upload Payment Evidence", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <label class="btn btn-default btn-file">
+                    <input accept="application/pdf" name="payment" id="payment" type="file" />
+                </label>
+                <br />@Html.ValidationMessage("payment")
+            </div>
+        </div>
+        @Html.Hidden("id", Model.SubmissionId)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

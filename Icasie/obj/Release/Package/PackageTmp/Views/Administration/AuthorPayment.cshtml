@@ -1,0 +1,141 @@
+﻿@model Icasie.Models.ViewModelConference
+
+@{
+    ViewBag.Title = "Review List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h1>Author Payment @Model.Name</h1>
+</div>
+<div class="row">
+    <table id="example" class="table">
+        <thead>
+            <tr>
+                <th>
+                    Author
+                </th>
+                <th>
+                    Number
+                </th>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Sub Theme
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Payment Type
+                </th>
+                <th>
+                    Total ($)
+                </th>
+                <th>
+                    Payment Evidence
+                </th>
+                <th>
+                    Payment Date
+                </th>
+                <th>
+                    Payment Verification Date
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+            </tr>
+        </tfoot>
+        <tbody>
+            @foreach (var abs in Model.Submissions)
+            {
+                <tr>
+                    <td>@abs.AuthorName</td>
+                    <td>@abs.Number</td>
+                    <td>@abs.Title</td>
+                    <td>@abs.SubThemes</td>
+                    <td>@abs.FullPaperStatus</td>
+                    <td>@abs.PaymentTypeString</td>
+                    <td>@abs.TotalPayment</td>
+                    <td>@Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Payment }, new { @class = "btn btn-primary" })</td>
+                    <td>@Html.Raw(abs.PaymentDate.Value.ToString(Icasie.Helper.Constant.DateFormat))</td>
+                    <td>@if(abs.FullPaperStatus.Equals(Icasie.Helper.Constant.FullPaperStatus.PaymentVerified)){ @Html.Raw(abs.PaymentVerificationDate.Value.ToString(Icasie.Helper.Constant.DateFormat))}</td>
+                    <td>@if(abs.FullPaperStatus.Equals(Icasie.Helper.Constant.FullPaperStatus.ReadyForPayment)) { @Html.ActionLink("Verify Payment", "VerifyPayment", "Administration", new { @id = abs.SubmissionId, @conferenceId = Model.ConferenceId }, new { @class = "btn btn-primary" }) }</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable({
+                initComplete: function () {
+                    this.api().columns().every(function (index) {
+                        if (index == 3 || index == 4) {
+                            var column = this;
+                            var select = $('<select><option value=""></option></select>')
+                                .appendTo($(column.footer()).empty())
+                                .on('change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+
+                                    column
+                                        .search(val ? '^' + val + '$' : '', true, false)
+                                        .draw();
+                                });
+
+                            column.data().unique().sort().each(function (d, j) {
+                                select.append('<option value="' + d + '">' + d + '</option>')
+                            });
+                        }
+
+                    });
+                }
+            });
+        });
+
+        function SetId(obj)
+        {
+            $("#Submission").val(obj);
+        }
+
+        function Submit()
+        {
+            $("#assign-form").submit();
+        }
+
+    </script>
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="af593e50d28b492287fc126bb547c50a" Name="Diagram1">
+        <EntityTypeShape EntityType="icasieModel.Conference" Width="1.5" PointX="0.75" PointY="7.25" />
+        <EntityTypeShape EntityType="icasieModel.Submission" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="icasieModel.User" Width="1.5" PointX="0.75" PointY="1.375" />
+        <AssociationConnector Association="icasieModel.FK_Submissions_Conferences" />
+        <AssociationConnector Association="icasieModel.FK_Submissions_Users" />
+        <AssociationConnector Association="icasieModel.FK_Submissions_Users1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

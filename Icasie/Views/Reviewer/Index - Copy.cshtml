@@ -1,0 +1,179 @@
+﻿@model IEnumerable<Icasie.Models.ViewModelConference>
+
+@{
+    ViewBag.Title = "Review List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h1>Reviews</h1>
+</div>
+
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <h3>@item.Name</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Author
+                    </th>
+                    <th>
+                        Number
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Full Paper
+                    </th>
+                    <th>
+                        Full Paper Upload Date
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Review Result
+                    </th>
+                    <th>
+                        Reviewer
+                    </th>
+                    <th>
+                        Review Date
+                    </th>
+                    <th>
+                        Comment
+                    </th>
+                    <th>
+                        Payment
+                    </th>
+                    <th>
+                        Payment Date
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="13"><h3><i>Waiting for Review</i></h3></td>
+                </tr>
+                @foreach (var abs in item.Submissions.Where(c => c.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Pending ))
+                {
+                    <tr>
+                        <td>@abs.AuthorName</td>
+                        <td>@abs.Number</td>
+                        <td>@abs.Title</td>
+                        <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
+                        <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
+                        <td>@abs.FullPaperStatus</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@abs.Comment</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                                <a class="btn btn-warning" href="/Reviewer/Edit/@abs.SubmissionId">Review</a>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="13"><h3><i>Waiting for Revision</i></h3></td>
+                </tr>
+                @foreach (var abs in item.Submissions.Where(c => c.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Revised))
+                {
+                    <tr>
+                        <td>@abs.AuthorName</td>
+                        <td>@abs.Number</td>
+                        <td>@abs.Title</td>
+                        <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
+                        <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
+                        <td>@abs.FullPaperStatus</td>
+                        <td>@((abs.ReviewerName != null) ? Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Review }, new { @class = "btn btn-primary" }) : Html.Raw(""))</td>
+                        <td>@abs.ReviewerName</td>
+                        <td>@abs.ReviewDateString</td>
+                        <td>@abs.Comment</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                                <a class="btn btn-warning" href="/Reviewer/Edit/@abs.SubmissionId">Change Review</a>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="13"><h3><i>Accepted</i></h3></td>
+                </tr>
+                @foreach (var abs in item.Submissions.Where(c => c.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Accepted))
+                {
+                    <tr>
+                        <td>@abs.AuthorName</td>
+                        <td>@abs.Number</td>
+                        <td>@abs.Title</td>
+                        <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
+                        <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
+                        <td>@abs.FullPaperStatus</td>
+                        <td></td>
+                        <td>@abs.ReviewerName</td>
+                        <td>@abs.ReviewDateString</td>
+                        <td>@abs.Comment</td>
+                        <td>@((abs.PaymentDate.HasValue) ? Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Payment }, new { @class = "btn btn-primary" }) : Html.Raw(""))</td>
+                        <td>@((abs.PaymentDate.HasValue) ? Html.Raw(abs.PaymentDate.Value.ToString(Icasie.Helper.Constant.DateFormat)) : Html.Raw(""))</td>
+                        <td>@(abs.PaymentDate.HasValue ? Html.ActionLink("Verify Payment", "VerifyPayment", "Reviewer", new { @id = abs.SubmissionId }, new { @class = "btn btn-warning" }) : Html.Raw(""))</td>
+                    </tr>
+                }
+
+                <tr>
+                    <td colspan="13"><h3><i>Payment Verified</i></h3></td>
+                </tr>
+                @foreach (var abs in item.Submissions.Where(c => c.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.PaymentVerified))
+                {
+                    <tr>
+                        <td>@abs.AuthorName</td>
+                        <td>@abs.Number</td>
+                        <td>@abs.Title</td>
+                        <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
+                        <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
+                        <td>@abs.FullPaperStatus</td>
+                        <td></td>
+                        <td>@abs.ReviewerName</td>
+                        <td>@abs.ReviewDateString</td>
+                        <td>@abs.Comment</td>
+                        <td>@((abs.PaymentDate.HasValue) ? Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Payment }, new { @class = "btn btn-primary" }) : Html.Raw(""))</td>
+                        <td>@((abs.PaymentDate.HasValue) ? Html.Raw(abs.PaymentDate.Value.ToString(Icasie.Helper.Constant.DateFormat)) : Html.Raw(""))</td>
+                        <td></td>
+                    </tr>
+                }
+
+                <tr>
+                    <td colspan="13"><h3><i>Rejected</i></h3></td>
+                </tr>
+                @foreach (var abs in item.Submissions.Where(c => c.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Rejected))
+                {
+                    <tr>
+                        <td>@abs.AuthorName</td>
+                        <td>@abs.Number</td>
+                        <td>@abs.Title</td>
+                        <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
+                        <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
+                        <td>@abs.FullPaperStatus</td>
+                        <td></td>
+                        <td>@abs.ReviewerName</td>
+                        <td>@abs.ReviewDateString</td>
+                        <td>@abs.Comment</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+}

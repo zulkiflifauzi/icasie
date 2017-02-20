@@ -1,0 +1,72 @@
+﻿@model Icasie.Models.ViewModelLogin
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login - ICASIE</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+    <link rel="icon" href="http://icasie.its.ac.id/wp-content/uploads/2016/12/cropped-its-32x32.png" sizes="32x32" />
+</head>
+<body>
+    <section>
+        <div class="container body-content">
+            <div style="margin-top:-50px">
+                <img src="/Content/Images/itslogo.png" style="width: 175px; margin: 0 auto" class="img-responsive" />
+            </div>
+            
+            <div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true)
+
+                        <div class="form-group">
+                            @Html.Label("Email", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" }, })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Password", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type="password" }, })
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                        </div>
+
+                        @if (TempData["message"] != null)
+                        {
+                            <div class="form-group">
+                                @Html.Label(" ", new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    <label style="color:red;font-style:italic">@TempData["message"]</label>
+                                </div>
+                            </div>
+                        }
+                        
+
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8">
+                                <input type="submit" value="Login" class="btn btn-primary" />&nbsp;<a href="/Login/Register" class="btn btn-primary">Register</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+    
+</body>
+</html>

@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="icasieModelStoreContainer" CdmEntityContainer="IcasieEntities">
+    <EntitySetMapping Name="Conferences">
+      <EntityTypeMapping TypeName="icasieModel.Conference">
+        <MappingFragment StoreEntitySet="Conferences">
+          <ScalarProperty Name="LastParticipantNumber" ColumnName="LastParticipantNumber" />
+          <ScalarProperty Name="LastSequenceNumber" ColumnName="LastSequenceNumber" />
+          <ScalarProperty Name="PaperSubEndDate" ColumnName="PaperSubEndDate" />
+          <ScalarProperty Name="PaperSubStartDate" ColumnName="PaperSubStartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ConferenceId" ColumnName="ConferenceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Fees">
+      <EntityTypeMapping TypeName="icasieModel.Fee">
+        <MappingFragment StoreEntitySet="Fees">
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="FeeId" ColumnName="FeeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Participants">
+      <EntityTypeMapping TypeName="icasieModel.Participant">
+        <MappingFragment StoreEntitySet="Participants">
+          <ScalarProperty Name="TotalPayment" ColumnName="TotalPayment" />
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="PaymentFileName" ColumnName="PaymentFileName" />
+          <ScalarProperty Name="Payment" ColumnName="Payment" />
+          <ScalarProperty Name="ConferenceId" ColumnName="ConferenceId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ParticipantId" ColumnName="ParticipantId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Submissions">
+      <EntityTypeMapping TypeName="icasieModel.Submission">
+        <MappingFragment StoreEntitySet="Submissions">
+          <ScalarProperty Name="TermsAgreement" ColumnName="TermsAgreement" />
+          <ScalarProperty Name="PaymentVerificationDate" ColumnName="PaymentVerificationDate" />
+          <ScalarProperty Name="ProofReadingDate" ColumnName="ProofReadingDate" />
+          <ScalarProperty Name="ProofReaderId" ColumnName="ProofReaderId" />
+          <ScalarProperty Name="ProofReadingResultFileName" ColumnName="ProofReadingResultFileName" />
+          <ScalarProperty Name="ProofReadingResult" ColumnName="ProofReadingResult" />
+          <ScalarProperty Name="TotalPayment" ColumnName="TotalPayment" />
+          <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+          <ScalarProperty Name="CoAuthors" ColumnName="CoAuthors" />
+          <ScalarProperty Name="SubThemesId" ColumnName="SubThemesId" />
+          <ScalarProperty Name="PaperNumber" ColumnName="PaperNumber" />
+          <ScalarProperty Name="FullPaperReviewFileName3" ColumnName="FullPaperReviewFileName3" />
+          <ScalarProperty Name="FullPaperReview3" ColumnName="FullPaperReview3" />
+          <ScalarProperty Name="FullPaperReviewFileName2" ColumnName="FullPaperReviewFileName2" />
+          <ScalarProperty Name="FullPaperReview2" ColumnName="FullPaperReview2" />
+          <ScalarProperty Name="FullPaperReviewFileName" ColumnName="FullPaperReviewFileName" />
+          <ScalarProperty Name="FullPaperReview" ColumnName="FullPaperReview" />
+          <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
+          <ScalarProperty Name="ReviewedBy" ColumnName="ReviewedBy" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="PaymentFileName" ColumnName="PaymentFileName" />
+          <ScalarProperty Name="Payment" ColumnName="Payment" />
+          <ScalarProperty Name="FullPaperDate" ColumnName="FullPaperDate" />
+          <ScalarProperty Name="FullPaperFileName" ColumnName="FullPaperFileName" />
+          <ScalarProperty Name="FullPaper" ColumnName="FullPaper" />
+          <ScalarProperty Name="FullPaperStatus" ColumnName="FullPaperStatus" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ConferenceId" ColumnName="ConferenceId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubThemes">
+      <EntityTypeMapping TypeName="icasieModel.SubTheme">
+        <MappingFragment StoreEntitySet="SubThemes">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="SubThemesId" ColumnName="SubThemesId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="icasieModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Institution" ColumnName="Institution" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Salt" ColumnName="Salt" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

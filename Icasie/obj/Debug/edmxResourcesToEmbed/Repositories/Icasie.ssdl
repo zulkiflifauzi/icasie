@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="icasieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Conferences">
+    <Key>
+      <PropertyRef Name="ConferenceId" />
+    </Key>
+    <Property Name="ConferenceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" Nullable="false" />
+    <Property Name="PaperSubStartDate" Type="date" Nullable="false" />
+    <Property Name="PaperSubEndDate" Type="date" Nullable="false" />
+    <Property Name="LastSequenceNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastParticipantNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Fees">
+    <Key>
+      <PropertyRef Name="FeeId" />
+    </Key>
+    <Property Name="FeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Participants">
+    <Key>
+      <PropertyRef Name="ParticipantId" />
+    </Key>
+    <Property Name="ParticipantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ConferenceId" Type="int" Nullable="false" />
+    <Property Name="Payment" Type="varbinary(max)" Nullable="false" />
+    <Property Name="PaymentFileName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PaymentDate" Type="date" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" MaxLength="50" />
+    <Property Name="PaymentStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TotalPayment" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Submissions">
+    <Key>
+      <PropertyRef Name="SubmissionId" />
+    </Key>
+    <Property Name="SubmissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ConferenceId" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FullPaperStatus" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FullPaper" Type="varbinary(max)" />
+    <Property Name="FullPaperFileName" Type="nvarchar(max)" />
+    <Property Name="FullPaperDate" Type="date" />
+    <Property Name="Payment" Type="varbinary(max)" />
+    <Property Name="PaymentFileName" Type="nvarchar(max)" />
+    <Property Name="PaymentDate" Type="date" />
+    <Property Name="Comment" Type="nvarchar(max)" />
+    <Property Name="ReviewedBy" Type="int" />
+    <Property Name="ReviewDate" Type="date" />
+    <Property Name="FullPaperReview" Type="varbinary(max)" />
+    <Property Name="FullPaperReviewFileName" Type="nvarchar(max)" />
+    <Property Name="FullPaperReview2" Type="varbinary(max)" />
+    <Property Name="FullPaperReviewFileName2" Type="nvarchar(max)" />
+    <Property Name="FullPaperReview3" Type="varbinary(max)" />
+    <Property Name="FullPaperReviewFileName3" Type="nvarchar(max)" />
+    <Property Name="PaperNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SubThemesId" Type="int" Nullable="false" />
+    <Property Name="CoAuthors" Type="int" Nullable="false" />
+    <Property Name="PaymentType" Type="int" Nullable="false" />
+    <Property Name="TotalPayment" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ProofReadingResult" Type="varbinary(max)" />
+    <Property Name="ProofReadingResultFileName" Type="nvarchar(max)" />
+    <Property Name="ProofReaderId" Type="int" />
+    <Property Name="ProofReadingDate" Type="date" />
+    <Property Name="PaymentVerificationDate" Type="date" />
+    <Property Name="TermsAgreement" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubThemes">
+    <Key>
+      <PropertyRef Name="SubThemesId" />
+    </Key>
+    <Property Name="SubThemesId" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Salt" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="6" Nullable="false" />
+    <Property Name="StreetAddress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="State" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Country" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Institution" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Participants_Conferences">
+    <End Role="Conferences" Type="Self.Conferences" Multiplicity="1" />
+    <End Role="Participants" Type="Self.Participants" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Conferences">
+        <PropertyRef Name="ConferenceId" />
+      </Principal>
+      <Dependent Role="Participants">
+        <PropertyRef Name="ConferenceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Participants_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Participants" Type="Self.Participants" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Participants">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submissions_Conferences">
+    <End Role="Conferences" Type="Self.Conferences" Multiplicity="1" />
+    <End Role="Submissions" Type="Self.Submissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Conferences">
+        <PropertyRef Name="ConferenceId" />
+      </Principal>
+      <Dependent Role="Submissions">
+        <PropertyRef Name="ConferenceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submissions_SubThemes">
+    <End Role="SubThemes" Type="Self.SubThemes" Multiplicity="1" />
+    <End Role="Submissions" Type="Self.Submissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubThemes">
+        <PropertyRef Name="SubThemesId" />
+      </Principal>
+      <Dependent Role="Submissions">
+        <PropertyRef Name="SubThemesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submissions_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Submissions" Type="Self.Submissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Submissions">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submissions_Users1">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Submissions" Type="Self.Submissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Submissions">
+        <PropertyRef Name="ReviewedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submissions_Users2">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Submissions" Type="Self.Submissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Submissions">
+        <PropertyRef Name="ProofReaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="icasieModelStoreContainer">
+    <EntitySet Name="Conferences" EntityType="Self.Conferences" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Fees" EntityType="Self.Fees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Participants" EntityType="Self.Participants" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Submissions" EntityType="Self.Submissions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubThemes" EntityType="Self.SubThemes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Participants_Conferences" Association="Self.FK_Participants_Conferences">
+      <End Role="Conferences" EntitySet="Conferences" />
+      <End Role="Participants" EntitySet="Participants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Participants_Users" Association="Self.FK_Participants_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Participants" EntitySet="Participants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submissions_Conferences" Association="Self.FK_Submissions_Conferences">
+      <End Role="Conferences" EntitySet="Conferences" />
+      <End Role="Submissions" EntitySet="Submissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submissions_SubThemes" Association="Self.FK_Submissions_SubThemes">
+      <End Role="SubThemes" EntitySet="SubThemes" />
+      <End Role="Submissions" EntitySet="Submissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submissions_Users" Association="Self.FK_Submissions_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Submissions" EntitySet="Submissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submissions_Users1" Association="Self.FK_Submissions_Users1">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Submissions" EntitySet="Submissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submissions_Users2" Association="Self.FK_Submissions_Users2">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Submissions" EntitySet="Submissions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

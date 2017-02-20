@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Icasie.Models.ViewModelConference>
+
+@{
+    ViewBag.Title = "Submission List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h1>Submissions</h1>
+</div>
+
+
+@foreach (var item in Model)
+{ 
+    <div class="row">
+        <h3 style="font-style:italic">@item.Name</h3>
+        @if(item.PaperSubActive == true){
+            <a href="/Submission/AddFullPaper/@item.ConferenceId" class="btn btn-primary" >Add Paper</a>
+        } 
+        else
+        {
+            <label style="color:red;font-weight:bold">Full Paper Submission has been closed</label>
+        }
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Full Paper
+                    </th>
+                    <th>
+                        Full Paper Upload Date
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Review Result
+                    </th>       
+                    <th>
+                        Reviewer
+                    </th>
+                    <th>
+                        Review Date
+                    </th>             
+                    <th>
+                        Comment
+                    </th>
+                    <th>
+                        Payment
+                    </th>
+                    <th>
+                        Payment Date
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var abs in item.Submissions)
+                {
+                    <tr>
+                        <td>@abs.Title</td>
+                        <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
+                        <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
+                        <td>@(abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.PaymentVerified ? Html.Raw("<font style='color:green;font-weight:bold'>" + abs.FullPaperStatus + "</font>") : Html.Raw(abs.FullPaperStatus))</td>
+                        <td>@((abs.FullPaperStatus != Icasie.Helper.Constant.FullPaperStatus.Revised) ? Html.Raw("") : Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Review }, new { @class = "btn btn-primary" }))</td>
+                        <td>@abs.ReviewerName</td>
+                        <td>@abs.ReviewDateString</td>
+                        <td>@abs.Comment</td>
+                        <td>@((abs.PaymentDate.HasValue) ? Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Payment }, new { @class = "btn btn-primary" }) : Html.Raw(""))</td>
+                        <td>@((abs.PaymentDate.HasValue) ? Html.Raw(abs.PaymentDate.Value.ToString(Icasie.Helper.Constant.DateFormat)) : Html.Raw(""))</td>
+                        <td>@if (abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Pending || abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Revised)
+                            {
+                                <a class="btn btn-primary" href="/Submission/EditFullPaper/@abs.SubmissionId">Change</a>
+                            }
+                            else if (abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Accepted)
+                            {
+                                if (!abs.PaymentDate.HasValue)
+                                {
+                                    <a class="btn btn-primary" href="/Submission/SubmitPayment/@abs.SubmissionId">Submit Payment</a>                
+                                }                                
+                            }
+                            </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+}

@@ -1,0 +1,65 @@
+﻿@model Icasie.Models.ViewModelSubmission
+
+@{
+    ViewBag.Title = "Edit Paper";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Proof Read</h2>
+
+
+@using (Html.BeginForm("EditProofReading", "Submission", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @readonly="readonly" }, })
+                
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Sub Theme", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SubThemesId, null, new { @class = "form-control", @disabled="disabled" })
+                
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Upload Paper", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <label class="btn btn-default btn-file">
+                    <input accept="application/pdf" name="file" id="file" type="file" />
+                </label>
+                <br />@Html.ValidationMessage("file")
+            </div>
+        </div>
+        @Html.Hidden("id", Model.SubmissionId)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+           
+        });
+
+    </script>
+
+}
