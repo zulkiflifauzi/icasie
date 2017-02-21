@@ -110,6 +110,10 @@
     <Property Name="ProofReadingDate" Type="DateTime" Precision="0" />
     <Property Name="PaymentVerificationDate" Type="DateTime" Precision="0" />
     <Property Name="TermsAgreement" Type="Boolean" Nullable="false" />
+    <Property Name="FormatCheckingResult" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="FormatCheckingResultFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FormatCheckerId" Type="Int32" />
+    <Property Name="FormatCheckingDate" Type="DateTime" Precision="0" />
     <NavigationProperty Name="Conference" Relationship="icasieModel.FK_Submissions_Conferences" FromRole="Submission" ToRole="Conference" />
     <NavigationProperty Name="SubTheme" Relationship="icasieModel.FK_Submissions_SubThemes" FromRole="Submission" ToRole="SubTheme" />
     <NavigationProperty Name="User" Relationship="icasieModel.FK_Submissions_Users" FromRole="Submission" ToRole="User" />

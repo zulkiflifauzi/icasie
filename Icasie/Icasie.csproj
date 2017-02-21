@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\FormatChecker\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
+    <Compile Include="Controllers\FormatCheckerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />
@@ -442,6 +444,7 @@
     <Content Include="Views\Conference\Payments.cshtml" />
     <Content Include="Views\Administration\AuthorPayment.cshtml" />
     <Content Include="Views\Submission\EditProofReading.cshtml" />
+    <Content Include="Views\User\AddFormatChecker.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

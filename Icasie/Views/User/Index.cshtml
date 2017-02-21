@@ -7,7 +7,7 @@
 
 <h2>@ViewData["Role"] List</h2>
 @if (ViewData["Role"].ToString() == Icasie.Helper.Constant.Role.Reviewer)
-{ 
+{
     <p>
         <a href="/User/AddReviewer" class="btn btn-primary">Register Reviewer</a>
     </p>
@@ -16,6 +16,12 @@ else if (ViewData["Role"].ToString() == Icasie.Helper.Constant.Role.ProofReader)
 {
     <p>
         <a href="/User/AddProofReader" class="btn btn-primary">Register Proof Reader</a>
+    </p>
+}
+else if (ViewData["Role"].ToString() == Icasie.Helper.Constant.Role.FormatChecker)
+{
+    <p>
+        <a href="/User/AddFormatChecker" class="btn btn-primary">Register Format Checker</a>
     </p>
 }
 <table id="example" class="table table-striped">
@@ -130,8 +136,8 @@ else if (ViewData["Role"].ToString() == Icasie.Helper.Constant.Role.ProofReader)
         }
 
     </tbody>
-    
-    
+
+
 
 
 </table>

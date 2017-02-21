@@ -190,6 +190,6 @@ namespace Icasie.Controllers
 
             return RedirectToAction("Index", new { id = conferenceId });
         }
-	
-	}
+
+    }
 }

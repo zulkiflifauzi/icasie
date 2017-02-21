@@ -45,6 +45,10 @@ namespace Icasie.Repositories
         public Nullable<System.DateTime> ProofReadingDate { get; set; }
         public Nullable<System.DateTime> PaymentVerificationDate { get; set; }
         public bool TermsAgreement { get; set; }
+        public byte[] FormatCheckingResult { get; set; }
+        public string FormatCheckingResultFileName { get; set; }
+        public Nullable<int> FormatCheckerId { get; set; }
+        public Nullable<System.DateTime> FormatCheckingDate { get; set; }
     
         public virtual Conference Conference { get; set; }
         public virtual SubTheme SubTheme { get; set; }

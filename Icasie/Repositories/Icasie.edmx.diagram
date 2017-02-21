@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="af593e50d28b492287fc126bb547c50a" Name="Diagram1">
-        <EntityTypeShape EntityType="icasieModel.Conference" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="icasieModel.Conference" Width="1.5" PointX="0.75" PointY="1.25" />
         <EntityTypeShape EntityType="icasieModel.Fee" Width="1.5" PointX="5.75" PointY="0.75" />
-        <EntityTypeShape EntityType="icasieModel.Participant" Width="1.5" PointX="3" PointY="5.75" />
+        <EntityTypeShape EntityType="icasieModel.Participant" Width="1.5" PointX="3" PointY="6.125" />
         <EntityTypeShape EntityType="icasieModel.Submission" Width="1.5" PointX="6" PointY="3.375" />
-        <EntityTypeShape EntityType="icasieModel.SubTheme" Width="1.5" PointX="3.75" PointY="2.5" />
-        <EntityTypeShape EntityType="icasieModel.User" Width="1.5" PointX="0.75" PointY="5.125" />
+        <EntityTypeShape EntityType="icasieModel.SubTheme" Width="1.5" PointX="3.75" PointY="3" />
+        <EntityTypeShape EntityType="icasieModel.User" Width="1.5" PointX="0.75" PointY="5.5" />
         <AssociationConnector Association="icasieModel.FK_Participants_Conferences" />
         <AssociationConnector Association="icasieModel.FK_Submissions_Conferences" />
         <AssociationConnector Association="icasieModel.FK_Participants_Users" />

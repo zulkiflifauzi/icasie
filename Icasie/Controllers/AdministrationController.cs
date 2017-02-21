@@ -98,7 +98,7 @@ namespace Icasie.Controllers
 
                 var uses = entity.Users.ToList();
 
-                var submissions = entity.Submissions.Where(c => c.ConferenceId == conference.ConferenceId && (c.FullPaperStatus == Constant.FullPaperStatus.ReadyForPayment || c.FullPaperStatus == Constant.FullPaperStatus.PaymentVerified ));
+                var submissions = entity.Submissions.Where(c => c.ConferenceId == conference.ConferenceId && (c.FullPaperStatus == Constant.FullPaperStatus.Pending || c.FullPaperStatus == Constant.FullPaperStatus.PaymentVerified ));
                 foreach (var subItem in submissions)
                 {
                     var user = uses.SingleOrDefault(c => c.UserId == subItem.UserId);

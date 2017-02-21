@@ -27,3 +27,31 @@ C:\Users\zulkifli\documents\visual studio 2013\Projects\Icasie\Icasie\bin\Antlr3
 C:\Users\zulkifli\documents\visual studio 2013\Projects\Icasie\Icasie\obj\Debug\Icasie.dll
 C:\Users\zulkifli\documents\visual studio 2013\Projects\Icasie\Icasie\obj\Debug\Icasie.pdb
 C:\Users\zulkifli\documents\visual studio 2013\Projects\Icasie\Icasie\obj\Debug\Icasie.csprojResolveAssemblyReference.cache
+C:\Icasie\Github\Icasie\obj\Debug\Icasie.dll
+C:\Icasie\Github\Icasie\bin\Icasie.dll.config
+C:\Icasie\Github\Icasie\bin\Icasie.dll
+C:\Icasie\Github\Icasie\bin\Icasie.pdb
+C:\Icasie\Github\Icasie\bin\Antlr3.Runtime.dll
+C:\Icasie\Github\Icasie\bin\EntityFramework.dll
+C:\Icasie\Github\Icasie\bin\Microsoft.Web.Infrastructure.dll
+C:\Icasie\Github\Icasie\bin\Newtonsoft.Json.dll
+C:\Icasie\Github\Icasie\bin\reCAPTCHA.MVC.dll
+C:\Icasie\Github\Icasie\bin\System.Web.Helpers.dll
+C:\Icasie\Github\Icasie\bin\System.Web.Mvc.dll
+C:\Icasie\Github\Icasie\bin\System.Web.Optimization.dll
+C:\Icasie\Github\Icasie\bin\System.Web.Razor.dll
+C:\Icasie\Github\Icasie\bin\System.Web.WebPages.Deployment.dll
+C:\Icasie\Github\Icasie\bin\System.Web.WebPages.dll
+C:\Icasie\Github\Icasie\bin\System.Web.WebPages.Razor.dll
+C:\Icasie\Github\Icasie\bin\WebGrease.dll
+C:\Icasie\Github\Icasie\bin\EntityFramework.xml
+C:\Icasie\Github\Icasie\bin\Newtonsoft.Json.xml
+C:\Icasie\Github\Icasie\bin\System.Web.Helpers.xml
+C:\Icasie\Github\Icasie\bin\System.Web.Mvc.xml
+C:\Icasie\Github\Icasie\bin\System.Web.Razor.xml
+C:\Icasie\Github\Icasie\bin\System.Web.WebPages.xml
+C:\Icasie\Github\Icasie\bin\System.Web.WebPages.Deployment.xml
+C:\Icasie\Github\Icasie\bin\System.Web.WebPages.Razor.xml
+C:\Icasie\Github\Icasie\bin\System.Web.Optimization.xml
+C:\Icasie\Github\Icasie\bin\Antlr3.Runtime.pdb
+C:\Icasie\Github\Icasie\obj\Debug\Icasie.pdb

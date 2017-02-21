@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="icasieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="icasieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Conferences">
           <Key>
             <PropertyRef Name="ConferenceId" />
@@ -75,6 +75,10 @@
           <Property Name="ProofReadingDate" Type="date" />
           <Property Name="PaymentVerificationDate" Type="date" />
           <Property Name="TermsAgreement" Type="bit" Nullable="false" />
+          <Property Name="FormatCheckingResult" Type="varbinary(max)" />
+          <Property Name="FormatCheckingResultFileName" Type="nvarchar(max)" />
+          <Property Name="FormatCheckerId" Type="int" />
+          <Property Name="FormatCheckingDate" Type="date" />
         </EntityType>
         <EntityType Name="SubThemes">
           <Key>
@@ -336,6 +340,10 @@
           <Property Name="ProofReadingDate" Type="DateTime" Precision="0" />
           <Property Name="PaymentVerificationDate" Type="DateTime" Precision="0" />
           <Property Name="TermsAgreement" Type="Boolean" Nullable="false" />
+          <Property Name="FormatCheckingResult" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FormatCheckingResultFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FormatCheckerId" Type="Int32" />
+          <Property Name="FormatCheckingDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Conference" Relationship="icasieModel.FK_Submissions_Conferences" FromRole="Submission" ToRole="Conference" />
           <NavigationProperty Name="SubTheme" Relationship="icasieModel.FK_Submissions_SubThemes" FromRole="Submission" ToRole="SubTheme" />
           <NavigationProperty Name="User" Relationship="icasieModel.FK_Submissions_Users" FromRole="Submission" ToRole="User" />
@@ -504,6 +512,10 @@
           <EntitySetMapping Name="Submissions">
             <EntityTypeMapping TypeName="icasieModel.Submission">
               <MappingFragment StoreEntitySet="Submissions">
+                <ScalarProperty Name="FormatCheckingDate" ColumnName="FormatCheckingDate" />
+                <ScalarProperty Name="FormatCheckerId" ColumnName="FormatCheckerId" />
+                <ScalarProperty Name="FormatCheckingResultFileName" ColumnName="FormatCheckingResultFileName" />
+                <ScalarProperty Name="FormatCheckingResult" ColumnName="FormatCheckingResult" />
                 <ScalarProperty Name="TermsAgreement" ColumnName="TermsAgreement" />
                 <ScalarProperty Name="PaymentVerificationDate" ColumnName="PaymentVerificationDate" />
                 <ScalarProperty Name="ProofReadingDate" ColumnName="ProofReadingDate" />

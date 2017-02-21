@@ -14,7 +14,7 @@ namespace Icasie.Helper
         public static List<SelectListItem> GetAbstractStatusList()
         {
             List<SelectListItem> result = new List<SelectListItem>();
-            
+
             SelectListItem revised = new SelectListItem();
             revised.Text = Constant.FullPaperStatus.Revised;
             revised.Value = Constant.FullPaperStatus.Revised;
@@ -47,8 +47,27 @@ namespace Icasie.Helper
             result.Add(revised);
 
             SelectListItem accepted = new SelectListItem();
-            accepted.Text = Constant.FullPaperStatus.ReadyForPayment;
-            accepted.Value = Constant.FullPaperStatus.ReadyForPayment;
+            accepted.Text = Constant.FullPaperStatus.Accepted;
+            accepted.Value = Constant.FullPaperStatus.Accepted;
+
+            result.Add(accepted);
+
+            return result;
+        }
+
+        public static List<SelectListItem> GetFormatCheckingStatusList()
+        {
+            List<SelectListItem> result = new List<SelectListItem>();
+
+            SelectListItem revised = new SelectListItem();
+            revised.Text = Constant.FullPaperStatus.FormatRevised;
+            revised.Value = Constant.FullPaperStatus.FormatRevised;
+
+            result.Add(revised);
+
+            SelectListItem accepted = new SelectListItem();
+            accepted.Text = Constant.FullPaperStatus.FormatChecked;
+            accepted.Value = Constant.FullPaperStatus.FormatChecked;
 
             result.Add(accepted);
 
@@ -97,7 +116,7 @@ namespace Icasie.Helper
         {
             List<SelectListItem> result = new List<SelectListItem>();
             foreach (var cultureInfo in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
-            {                
+            {
                 var regionInfo = new RegionInfo(cultureInfo.Name);
                 if (!result.Any(c => c.Text.Equals(regionInfo.EnglishName)))
                 {

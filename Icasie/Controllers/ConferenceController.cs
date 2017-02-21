@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Icasie.Controllers
 {
-    [Authorize(Roles="Reviewer, Proof Reader, Administrator")]
+    [Authorize(Roles = "Reviewer, Proof Reader, Format Checker, Administrator")]
     public class ConferenceController : Controller
     {
         //
@@ -21,7 +21,7 @@ namespace Icasie.Controllers
             using (IcasieEntities entity = new IcasieEntities())
             {
                 var conferences = entity.Conferences.ToList();
-                foreach(var item in conferences)
+                foreach (var item in conferences)
                 {
                     ViewModelConference newConf = new ViewModelConference();
                     newConf.PaperSubActive = false;
@@ -169,7 +169,7 @@ namespace Icasie.Controllers
 
             if (isExist == true)
             {
-               TempData["Message"] = "Conference cannot be deleted";
+                TempData["Message"] = "Conference cannot be deleted";
             }
 
             return RedirectToAction("index");
@@ -182,7 +182,7 @@ namespace Icasie.Controllers
             DateTime outEndDate = new DateTime();
             DateTime outPaperStartDate = new DateTime();
             DateTime outPaperEndDate = new DateTime();
-            
+
             IFormatProvider provider = CultureInfo.CurrentCulture;
             if (!DateTime.TryParseExact(model.StartDateString, Constant.DateFormatInput, provider, DateTimeStyles.None, out outStartDate))
             {
@@ -193,7 +193,7 @@ namespace Icasie.Controllers
             {
                 ModelState.AddModelError("EndDateString", "End Date format is not valid");
             }
-            
+
             if (!DateTime.TryParseExact(model.PaperSubStartDateString, Constant.DateFormatInput, provider, DateTimeStyles.None, out outPaperStartDate))
             {
                 ModelState.AddModelError("PaperSubStartDateString", "Paper Submission Start Date format is not valid");
@@ -231,5 +231,5 @@ namespace Icasie.Controllers
             }
             return RedirectToAction("Index");
         }
-	}
+    }
 }

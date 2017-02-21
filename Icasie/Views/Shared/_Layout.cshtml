@@ -22,34 +22,35 @@
                 <img src="/Content/Images/icasie-logo.png" style="width: 100px; margin: 0 auto; padding-top:5px; padding-bottom:5px" class="img-responsive" />
 
             </div>
-            <div style="padding-top:25px; font-size:1.3em" class="navbar-collapse collapse navbar-right">
+            <div style="padding-top:25px; font-size:1.1em" class="navbar-collapse collapse navbar-right">
                 <ul class="nav navbar-nav">
-                    @if(User.IsInRole("Administrator") || User.IsInRole("Reviewer"))
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Reviewer") || User.IsInRole("Format Checker") || User.IsInRole("Proof Reader"))
                     {
                         <li>@Html.ActionLink("Conferences", "Index", "Conference")</li>
                     }
                     @if (User.IsInRole("Administrator"))
                     {
-                        <li>@Html.ActionLink("Authors", "Index", "User", new { id = Icasie.Helper.Constant.Role.Author}, null)</li>
-                        <li>@Html.ActionLink("Reviewers", "Index", "User", new { id = Icasie.Helper.Constant.Role.Reviewer}, null)</li>
-                        <li>@Html.ActionLink("Proof Readers", "Index", "User", new { id = Icasie.Helper.Constant.Role.ProofReader}, null)</li>
                         <li>@Html.ActionLink("Payments", "Payments", "Conference")</li>
+                        <li>@Html.ActionLink("Authors", "Index", "User", new { id = Icasie.Helper.Constant.Role.Author }, null)</li>
+                        <li>@Html.ActionLink("Format Checkers", "Index", "User", new { id = Icasie.Helper.Constant.Role.FormatChecker }, null)</li>
+                        <li>@Html.ActionLink("Reviewers", "Index", "User", new { id = Icasie.Helper.Constant.Role.Reviewer }, null)</li>
+                        <li>@Html.ActionLink("Proof Readers", "Index", "User", new { id = Icasie.Helper.Constant.Role.ProofReader }, null)</li>
                         @*<li>@Html.ActionLink("Participants", "Participants", "Administration")</li>*@
                     }
                     @if (User.IsInRole("Participant"))
                     {
                         <li>@Html.ActionLink("Participations", "Index", "Participant")</li>
                     }
-                    @if(User.IsInRole("Author"))
+                    @if (User.IsInRole("Author"))
                     {
                         <li>@Html.ActionLink("Submissions", "Index", "Submission")</li>
                     }
-                    @if(User.Identity.IsAuthenticated)
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Change Password", "ChangePassword", "Login")</li>
                         <li>@Html.ActionLink("Logoff", "Logoff", "Login")</li>
                     }
-                    
+
                 </ul>
             </div>
         </div>

@@ -55,6 +55,55 @@ namespace Icasie.Controllers
             return View();
         }
 
+        public ActionResult AddFormatChecker()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddFormatChecker(ViewModelUser model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            string randomPassword = Icasie.Helper.Helper.GenerateRandomGuidPassword().Substring(0, 10);
+
+            var random = new Random();
+            string salt = Icasie.Helper.Helper.CreateSalt(random.Next(10, 100));
+            string password = Icasie.Helper.Helper.CreatePasswordHash(randomPassword, salt);
+
+            using (IcasieEntities entity = new IcasieEntities())
+            {
+                if (entity.Users.Any(c => c.Email == model.Email))
+                {
+                    ViewData["message"] = "User already exist";
+                    return View(model);
+                }
+                Icasie.Repositories.User user = new Icasie.Repositories.User();
+                user.Email = model.Email;
+                user.City = model.City;
+                user.Country = model.Country;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Password = password;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Role = Constant.Role.FormatChecker;
+                user.Salt = salt;
+                user.State = model.State;
+                user.StreetAddress = model.StreetAddress;
+                user.Gender = model.Gender;
+                user.Institution = model.Institution;
+
+                entity.Users.Add(user);
+                entity.SaveChanges();
+
+                System.Threading.Tasks.Task.Run(() => EmailHelper.SendEmailNewUser(model.Email, model.FirstName + " " + model.LastName, randomPassword, ConfigurationManager.AppSettings["SiteName"]));
+
+            }
+
+            return RedirectToAction("Index", new { id = Constant.Role.Reviewer });
+        }
+
         [HttpPost]
         public ActionResult AddReviewer(ViewModelUser model)
         {
@@ -135,8 +184,8 @@ namespace Icasie.Controllers
                 entity.Users.Add(user);
                 entity.SaveChanges();
 
-                System.Threading.Tasks.Task.Run(() =>EmailHelper.SendEmailNewUser(model.Email, model.FirstName + " " + model.LastName, randomPassword, ConfigurationManager.AppSettings["SiteName"]));
-                
+                System.Threading.Tasks.Task.Run(() => EmailHelper.SendEmailNewUser(model.Email, model.FirstName + " " + model.LastName, randomPassword, ConfigurationManager.AppSettings["SiteName"]));
+
             }
 
             return RedirectToAction("Index", new { id = Constant.Role.Reviewer });
@@ -165,5 +214,5 @@ namespace Icasie.Controllers
             }
             return View(result);
         }
-	}
+    }
 }

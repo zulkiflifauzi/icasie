@@ -124,7 +124,7 @@ namespace Icasie.Controllers
 
             if (fullPaperStatus == Constant.FullPaperStatus.Revised && file == null)
             {
-                ModelState.AddModelError("file", "File cannot be empty");                
+                ModelState.AddModelError("file", "File cannot be empty");
             }
 
             if (fullPaperStatus == Constant.FullPaperStatus.Revised || fullPaperStatus == Constant.FullPaperStatus.Rejected)
@@ -232,17 +232,17 @@ namespace Icasie.Controllers
                         Task.Run(() => Helper.EmailHelper.SendEmailNotification(proofReaderEmail, Constant.NotificationMode.AssignProofReader, conferenceName, paperTitle));
 
                     }
-                    
+
 
                     entity.SaveChanges();
                 }
             }
             catch (DbEntityValidationException ex)
-            { 
+            {
             }
 
 
             return RedirectToAction("Index", new { id = conferenceId });
         }
-	}
+    }
 }

@@ -62,6 +62,7 @@ namespace Icasie.Helper
             public const string Administrator = "Administrator";
             public const string Participant = "Participant";
             public const string ProofReader = "Proof Reader";
+            public const string FormatChecker = "Format Checker";
         }
 
         public static class CookieExpiration
@@ -74,10 +75,12 @@ namespace Icasie.Helper
         {
             public const string Pending = "Pending";
             public const string Accepted = "Accepted";
+            public const string FormatRevised = "Formatting Revised";
+            public const string FormatChecked = "Formatting Checked";
             public const string Revised = "Revised";
             public const string Reviewed = "Reviewed";
             public const string ProofReadingRevised = "Proof Reading Revised";
-            public const string ReadyForPayment = "Ready For Payment";
+            public const string Paid = "Paid";
             public const string Rejected = "Rejected";
             public const string PaymentVerified = "Payment Verified";
         }
@@ -91,12 +94,13 @@ namespace Icasie.Helper
             public const string Review3 = "Review3";
             public const string ParticipantPayment = "Participant";
             public const string ProofReading = "ProofReading";
+            public const string FormatChecking = "FormatChecking";
         }
 
         public static class Gender
         {
             public const string Male = "Male";
             public const string Female = "Female";
-        }        
+        }
     }
 }

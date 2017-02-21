@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="icasieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="icasieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Conferences">
     <Key>
       <PropertyRef Name="ConferenceId" />
@@ -70,6 +70,10 @@
     <Property Name="ProofReadingDate" Type="date" />
     <Property Name="PaymentVerificationDate" Type="date" />
     <Property Name="TermsAgreement" Type="bit" Nullable="false" />
+    <Property Name="FormatCheckingResult" Type="varbinary(max)" />
+    <Property Name="FormatCheckingResultFileName" Type="nvarchar(max)" />
+    <Property Name="FormatCheckerId" Type="int" />
+    <Property Name="FormatCheckingDate" Type="date" />
   </EntityType>
   <EntityType Name="SubThemes">
     <Key>

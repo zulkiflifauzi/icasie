@@ -42,6 +42,10 @@
     <EntitySetMapping Name="Submissions">
       <EntityTypeMapping TypeName="icasieModel.Submission">
         <MappingFragment StoreEntitySet="Submissions">
+          <ScalarProperty Name="FormatCheckingDate" ColumnName="FormatCheckingDate" />
+          <ScalarProperty Name="FormatCheckerId" ColumnName="FormatCheckerId" />
+          <ScalarProperty Name="FormatCheckingResultFileName" ColumnName="FormatCheckingResultFileName" />
+          <ScalarProperty Name="FormatCheckingResult" ColumnName="FormatCheckingResult" />
           <ScalarProperty Name="TermsAgreement" ColumnName="TermsAgreement" />
           <ScalarProperty Name="PaymentVerificationDate" ColumnName="PaymentVerificationDate" />
           <ScalarProperty Name="ProofReadingDate" ColumnName="ProofReadingDate" />
