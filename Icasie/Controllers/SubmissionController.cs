@@ -211,6 +211,7 @@ namespace Icasie.Controllers
                     ViewModelSubmission newSubmission = new ViewModelSubmission();
 
                     var user = entity.Users.SingleOrDefault(c => c.UserId == subItem.UserId);
+                    var formatChecker = entity.Users.SingleOrDefault(c => c.UserId == subItem.FormatCheckerId);
                     var reviewer = entity.Users.SingleOrDefault(c => c.UserId == subItem.ReviewedBy);
                     var proofReader = entity.Users.SingleOrDefault(c => c.UserId == subItem.ProofReaderId);
 
@@ -225,6 +226,7 @@ namespace Icasie.Controllers
                     newSubmission.SubmissionId = subItem.SubmissionId;
                     newSubmission.Institution = user.Institution;
                     newSubmission.Number = subItem.PaperNumber;
+                    newSubmission.FormatCheckerName = reviewer != null ? formatChecker.FirstName + " " + formatChecker.LastName : "";
                     newSubmission.ReviewerName = reviewer != null ? reviewer.FirstName + " " + reviewer.LastName : "";
                     newSubmission.ProofReaderName = proofReader != null ? proofReader.FirstName + " " + proofReader.LastName : "";
                     results.Add(newSubmission);
@@ -392,7 +394,7 @@ namespace Icasie.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Author, Administrator, Reviewer")]
-        public ActionResult AddFullPaper(int id, string title, HttpPostedFileBase file, int subThemesId, int coAuthors, int paymentType, bool termsAgreement)
+        public ActionResult AddFullPaper(int id, string title, HttpPostedFileBase file, HttpPostedFileBase payment, int subThemesId, int coAuthors, int paymentType, bool termsAgreement)
         {
             List<string> adminEmails = new List<string>();
             string conferenceName = string.Empty;
@@ -403,6 +405,11 @@ namespace Icasie.Controllers
             if (file == null)
             {
                 ModelState.AddModelError("file", "File cannot be empty");    
+            }
+
+            if (payment == null)
+            {
+                ModelState.AddModelError("payment", "Payment Evidence cannot be empty");
             }
 
             if (termsAgreement == false)
@@ -428,6 +435,8 @@ namespace Icasie.Controllers
             subs.ConferenceId = id;
             subs.FullPaperFileName = file.FileName;
             subs.FullPaperDate = DateTime.Now;
+            subs.PaymentFileName = payment.FileName;
+            subs.PaymentDate = DateTime.Now;
             subs.PaperNumber = GetLatestSequenceNumber(id);
             subs.SubThemesId = subThemesId;
             subs.FullPaperStatus = Constant.FullPaperStatus.Pending;
@@ -445,6 +454,18 @@ namespace Icasie.Controllers
                     inputStream.CopyTo(memoryStream);
                 }
                 subs.FullPaper = memoryStream.ToArray();
+
+            }
+
+            using (Stream inputStream = payment.InputStream)
+            {
+                MemoryStream memoryStream = inputStream as MemoryStream;
+                if (memoryStream == null)
+                {
+                    memoryStream = new MemoryStream();
+                    inputStream.CopyTo(memoryStream);
+                }
+                subs.Payment = memoryStream.ToArray();
 
             }
             using (IcasieEntities entity = new IcasieEntities())

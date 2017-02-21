@@ -160,7 +160,7 @@ namespace Icasie.Controllers
         }
 
         [HttpPost]
-        public ActionResult Assign(int reviewer, int submission, int proofReader)
+        public ActionResult Assign(int reviewer, int submission, int proofReader, int formatChecker)
         {
             string conferenceName = string.Empty;
             string title = string.Empty;
@@ -172,6 +172,7 @@ namespace Icasie.Controllers
                 title = sub.Title;
                 sub.ReviewedBy = reviewer;
                 sub.ProofReaderId = proofReader;
+                sub.FormatCheckerId = formatChecker;
                 db.SaveChanges();
 
                 reviewerEmail.Add(db.Users.SingleOrDefault(c => c.UserId == reviewer).Email);
@@ -212,6 +213,7 @@ namespace Icasie.Controllers
                 foreach (var subItem in submissions)
                 {
                     var user = uses.SingleOrDefault(c => c.UserId == subItem.UserId);
+                    var formatChecker = uses.SingleOrDefault(c => c.UserId == subItem.FormatCheckerId);
                     var reviwer = uses.SingleOrDefault(c => c.UserId == subItem.ReviewedBy);
                     var proofReader = uses.SingleOrDefault(c => c.UserId == subItem.ProofReaderId);
 
@@ -227,6 +229,8 @@ namespace Icasie.Controllers
                     newSubmission.SubThemes = subThemes.FirstOrDefault(c => c.SubThemesId == subItem.SubThemesId).Title;
                     newSubmission.PaymentTypeString = subItem.PaymentType == Constant.PaymentType.Full ? Constant.PaymentType.FullString : Constant.PaymentType.PartialString;
                     newSubmission.PaymentType = subItem.PaymentType;
+                    newSubmission.FormatCheckerName = subItem.FormatCheckerId.HasValue ? formatChecker.FirstName + " " + formatChecker.LastName : "";
+                    newSubmission.FormatCheckerId = subItem.FormatCheckerId.HasValue ? subItem.FormatCheckerId.Value : 0;
                     newSubmission.ReviewerName = subItem.ReviewedBy.HasValue ? reviwer.FirstName + " " + reviwer.LastName : "";
                     newSubmission.ReviewedBy = subItem.ReviewedBy.HasValue ? subItem.ReviewedBy.Value : 0;
                     newSubmission.ProofReaderName = subItem.ProofReaderId.HasValue ? proofReader.FirstName + " " + proofReader.LastName : "";
@@ -273,6 +277,22 @@ namespace Icasie.Controllers
 
 
             ViewData["ProofReaders"] = proofReaderList;
+
+            List<SelectListItem> formatCheckerList = new List<SelectListItem>();
+
+
+            using (IcasieEntities entity = new IcasieEntities())
+            {
+                var formatCheckers = entity.Users.Where(c => c.Role.Equals(Constant.Role.FormatChecker)).ToList();
+
+                foreach (var item in formatCheckers)
+                {
+                    formatCheckerList.Add(new SelectListItem { Text = item.FirstName + " " + item.LastName, Value = item.UserId.ToString() });
+                }
+            }
+
+
+            ViewData["FormatCheckers"] = formatCheckerList;
         }
 
         private string GetLatestSequenceNumber(int conferenceId)

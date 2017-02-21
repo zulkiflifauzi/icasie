@@ -26,6 +26,9 @@
                 Status
             </th>
             <th>
+                Format Checker
+            </th>
+            <th>
                 Reviewer
             </th>
             <th>
@@ -46,6 +49,9 @@
             </th>
             <th>
                 
+            </th>
+            <th>
+
             </th>
             <th>
                 
@@ -78,7 +84,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.FullPaperStatus)
                 </td>
-
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormatCheckerName)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ReviewerName)
                 </td>
@@ -98,7 +106,7 @@
             $('#example').DataTable({
                 initComplete: function () {
                     this.api().columns().every(function (index) {
-                        if (index == 4 || index == 5 || index == 6) {
+                        if (index == 4 || index == 5 || index == 6 || index == 7) {
                             var column = this;
                             var select = $('<select><option value=""></option></select>')
                                 .appendTo($(column.footer()).empty())

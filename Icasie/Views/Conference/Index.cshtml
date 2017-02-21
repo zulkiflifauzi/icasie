@@ -88,6 +88,10 @@
                     @(item.PaperSubActive ? Html.Raw("Opened") : Html.Raw("Closed"))
                 </td>
                 <td>
+                    @if (User.IsInRole("Format Checker"))
+                    {
+                        @Html.ActionLink("Format Checkers", "Index", "FormatCheck", new { id = item.ConferenceId }, new { @class = "btn btn-warning" })
+                    }
                     @if (User.IsInRole("Reviewer"))
                     {
                         @Html.ActionLink("Reviews", "Index", "Reviewer", new { id = item.ConferenceId }, new { @class = "btn btn-warning" }) 

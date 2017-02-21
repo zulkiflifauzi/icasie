@@ -29,6 +29,9 @@
                         Status
                     </th>
                     <th>
+                        Format Checker
+                    </th>
+                    <th>
                         Reviewer
                     </th>
                     <th>
@@ -57,6 +60,8 @@
                     </th>
                     <th>
                     </th>
+                    <th>
+                    </th>
                 </tr>
             </tfoot>
             <tbody>
@@ -68,6 +73,7 @@
                         <td>@abs.Title</td>
                         <td>@abs.SubThemes</td>
                         <td>@abs.FullPaperStatus</td>
+                        <td>@abs.FormatCheckerName</td>
                         <td>@abs.ReviewerName</td>
                         <td>@abs.ProofReaderName</td>
                         <td>
@@ -90,14 +96,21 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                <h4 class="modal-title" id="myModalLabel">Assign Format Checker</h4>
+            </div>
+            <div class="modal-body">
+                @Html.DropDownList("FormatChecker", ViewData["FormatCheckers"] as List<SelectListItem>, new { @class = "form-control" })
+            </div>
+            <div class="modal-header">
+                
                 <h4 class="modal-title" id="myModalLabel">Assign Reviewer</h4>
             </div>
             <div class="modal-body">
                 @Html.DropDownList("Reviewer", ViewData["Reviewers"] as List<SelectListItem>, new { @class = "form-control" }) 
             </div>
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                
                 <h4 class="modal-title" id="myModalLabel">Assign Proof Reader</h4>
             </div>
             <div class="modal-body">

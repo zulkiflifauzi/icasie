@@ -55,3 +55,4 @@ C:\Icasie\Github\Icasie\bin\System.Web.WebPages.Razor.xml
 C:\Icasie\Github\Icasie\bin\System.Web.Optimization.xml
 C:\Icasie\Github\Icasie\bin\Antlr3.Runtime.pdb
 C:\Icasie\Github\Icasie\obj\Debug\Icasie.pdb
+C:\Icasie\Github\Icasie\obj\Debug\Icasie.csprojResolveAssemblyReference.cache

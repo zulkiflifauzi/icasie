@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Icasie.Controllers
 {
+    [Authorize(Roles = "Format Checker, Administrator")]
     public class FormatCheckerController : Controller
     {
         //

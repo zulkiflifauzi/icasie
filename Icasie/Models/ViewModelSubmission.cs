@@ -47,6 +47,18 @@ namespace Icasie.Models
 
         public string ProofReadingDateString { get; set; }
 
+        public int FormatCheckerId { get; set; }
+
+        public string FormatCheckerName { get; set; }
+
+        public Byte[] FormatCheckingResult { get; set; }
+
+        public string FormatCheckingResultFileName { get; set; }
+
+        public DateTime FormatCheckingDate { get; set; }
+
+        public string FormatCheckingDateString { get; set; }
+
         public int ReviewedBy { get; set; }
 
         public string ReviewerName { get; set; }
@@ -67,7 +79,7 @@ namespace Icasie.Models
 
         public string FullPaperReviewFileName3 { get; set; }
 
-        [Display(Name="Sub Theme")]
+        [Display(Name = "Sub Theme")]
         public int SubThemesId { get; set; }
 
         public string SubThemes { get; set; }
