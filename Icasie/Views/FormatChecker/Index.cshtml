@@ -39,13 +39,13 @@
                         Status
                     </th>
                     <th>
-                        Proof Reading Result
+                        Format Checking Result
                     </th>
                     <th>
-                        Proof Reader
+                        Format Checker
                     </th>
                     <th>
-                        Proof Reading Date
+                        Format Checking Date
                     </th>
                     <th>
                         Action
@@ -54,7 +54,7 @@
             </thead>
             <tfoot>
                 <tr>
-                    
+
                     <th>
 
                     </th>
@@ -101,13 +101,13 @@
                         <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
                         <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
                         <td>@abs.FullPaperStatus</td>
-                        <td>@((abs.ProofReaderResultFileName != null) ? Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.ProofReading }, new { @class = "btn btn-primary" }) : Html.Raw(""))</td>
-                        <td>@abs.ProofReaderName</td>
-                        <td>@abs.ProofReadingDateString</td>
+                        <td>@((abs.FormatCheckingResultFileName != null) ? Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.FormatChecking }, new { @class = "btn btn-primary" }) : Html.Raw(""))</td>
+                        <td>@abs.FormatCheckerName</td>
+                        <td>@abs.FormatCheckingDateString</td>
                         <td>
-                            @if (abs.FullPaperStatus.Equals(Icasie.Helper.Constant.FullPaperStatus.Reviewed))
+                            @if (abs.FullPaperStatus.Equals(Icasie.Helper.Constant.FullPaperStatus.PaymentVerified))
                             {
-                                <a class="btn btn-warning" href="/ProofReader/Edit/@abs.SubmissionId">Proof Read</a>
+                                <a class="btn btn-warning" href="/FormatChecker/Edit/@abs.SubmissionId">Format Check</a>
                             }
                         </td>
                     </tr>

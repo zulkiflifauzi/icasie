@@ -89,9 +89,17 @@ namespace Icasie.Controllers
                             newSubmission.ProofReaderResultFileName = subItem.ProofReadingResultFileName;
                         }
 
+                        if (subItem.FormatCheckerId != null)
+                        {
+                            var formatChecker = entity.Users.SingleOrDefault(c => c.UserId == subItem.FormatCheckerId);
+                            newSubmission.FormatCheckerName = formatChecker.FirstName + " " + formatChecker.LastName;
+                            newSubmission.FormatCheckingResultFileName = subItem.FormatCheckingResultFileName;
+                        }
+
 
                         newSubmission.ReviewDateString = subItem.ReviewDate.HasValue ? subItem.ReviewDate.Value.ToString(Constant.DateFormat) : string.Empty;
-                        newSubmission.ProofReadingDateString = subItem.ProofReadingDate.HasValue ? subItem.ProofReadingDate.Value.ToString(Constant.DateFormat) : string.Empty;  
+                        newSubmission.ProofReadingDateString = subItem.ProofReadingDate.HasValue ? subItem.ProofReadingDate.Value.ToString(Constant.DateFormat) : string.Empty;
+                        newSubmission.FormatCheckingDateString = subItem.FormatCheckingDate.HasValue ? subItem.FormatCheckingDate.Value.ToString(Constant.DateFormat) : string.Empty;  
 
                         newConf.Submissions.Add(newSubmission);
                     }
@@ -118,6 +126,7 @@ namespace Icasie.Controllers
                 sub.SubThemesId = oldSub.SubThemesId;
                 sub.CoAuthors = oldSub.CoAuthors;
                 sub.PaymentType = oldSub.PaymentType;
+                sub.FullPaperStatus = oldSub.FullPaperStatus;
 
                 PrepareViewData(entity);
             }
@@ -258,7 +267,7 @@ namespace Icasie.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Author, Administrator, Reviewer")]
-        public ActionResult EditFullPaper(int id, string title, HttpPostedFileBase file, int subThemesId, int coAuthors, int paymentType)
+        public ActionResult EditFullPaper(int id, string title, HttpPostedFileBase file, int subThemesId, int coAuthors = 0, int paymentType = 0)
         {
             if (file == null)
             {
@@ -273,6 +282,7 @@ namespace Icasie.Controllers
                     sub.SubThemesId = oldSub.SubThemesId;                 
                     sub.CoAuthors = oldSub.CoAuthors;
                     sub.PaymentType = oldSub.PaymentType;
+                    sub.FullPaperStatus = oldSub.FullPaperStatus;
 
                     PrepareViewData(entity);
                 }
@@ -286,7 +296,7 @@ namespace Icasie.Controllers
             {
                 var sub = entity.Submissions.SingleOrDefault(c => c.SubmissionId == id);
                 sub.Title = title;
-                sub.FullPaperStatus = Constant.FullPaperStatus.Pending;
+                //sub.FullPaperStatus = Constant.FullPaperStatus.Pending;
                 sub.ReviewDate = null;
                 sub.FullPaperReview = null;
                 sub.FullPaperReviewFileName = null;
@@ -294,44 +304,66 @@ namespace Icasie.Controllers
                 sub.FullPaperReviewFileName2 = null;
                 sub.FullPaperReview3 = null;
                 sub.FullPaperReviewFileName3 = null;
+                sub.ProofReadingResult = null;
+                sub.ProofReadingResultFileName = null;
+                sub.FormatCheckingResult = null;
+                sub.FormatCheckingResultFileName = null;
                 sub.Comment = Constant.InitialComment;
                 sub.SubThemesId = subThemesId;                
                 sub.CoAuthors = coAuthors;
                 sub.PaymentType = paymentType;
 
                 var user = entity.Users.SingleOrDefault(c => c.UserId == sub.UserId);
-                var fees = entity.Fees.ToList();
-
-                decimal full = 0;
-                decimal seminar = 0;
-                decimal coauthor = 0;
 
 
-                if (user.Country != Constant.Indonesia)
+                if (sub.FullPaperStatus.Equals(Constant.FullPaperStatus.Pending))
                 {
-                    full = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.OverseasFull)).Price;
-                    seminar = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.OverseasSeminar)).Price;
-                    coauthor = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.OverseasCoauthor)).Price;
-                }
-                else
-                {
-                    full = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.IndonesianFull)).Price;
-                    seminar = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.IndonesianSeminar)).Price;
-                    coauthor = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.IndonesianCoauthor)).Price;
-                }
-                
-                decimal total = 0;
-                if (paymentType == Constant.PaymentType.Full)
-                {
-                    total += full;
-                }
-                else
-                {
-                    total += seminar;
-                }
+                    var fees = entity.Fees.ToList();
 
-                total += (coAuthors * coauthor);
-                sub.TotalPayment = total;                
+                    decimal full = 0;
+                    decimal seminar = 0;
+                    decimal coauthor = 0;
+
+
+                    if (user.Country != Constant.Indonesia)
+                    {
+                        full = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.OverseasFull)).Price;
+                        seminar = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.OverseasSeminar)).Price;
+                        coauthor = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.OverseasCoauthor)).Price;
+                    }
+                    else
+                    {
+                        full = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.IndonesianFull)).Price;
+                        seminar = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.IndonesianSeminar)).Price;
+                        coauthor = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.IndonesianCoauthor)).Price;
+                    }
+
+                    decimal total = 0;
+                    if (paymentType == Constant.PaymentType.Full)
+                    {
+                        total += full;
+                    }
+                    else
+                    {
+                        total += seminar;
+                    }
+
+                    total += (coAuthors * coauthor);
+                    sub.TotalPayment = total;   
+                }
+                else if(sub.FullPaperStatus.Equals(Constant.FullPaperStatus.FormatRevised))
+                {
+                    sub.FullPaperStatus = Constant.FullPaperStatus.PaymentVerified;
+                }
+                else if (sub.FullPaperStatus.Equals(Constant.FullPaperStatus.Revised))
+                {
+                    sub.FullPaperStatus = Constant.FullPaperStatus.FormatChecked;
+                }
+                else if (sub.FullPaperStatus.Equals(Constant.FullPaperStatus.ProofReadingRevised))
+                {
+                    sub.FullPaperStatus = Constant.FullPaperStatus.Reviewed;
+                }
+                             
 
                 if (file != null)
                 {
@@ -634,6 +666,12 @@ namespace Icasie.Controllers
             {
                 fileBytes = sub.ProofReadingResult;
                 fileName = sub.ProofReadingResultFileName;
+            }
+
+            if (type == Constant.DownloadType.FormatChecking)
+            {
+                fileBytes = sub.FormatCheckingResult;
+                fileName = sub.FormatCheckingResultFileName;
             }
             
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);

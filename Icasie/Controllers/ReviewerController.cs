@@ -50,7 +50,7 @@ namespace Icasie.Controllers
                     newConf.PaperSubEndDate = item.PaperSubEndDate;
                     newConf.Submissions = new List<ViewModelSubmission>();
 
-                    var submissions = entity.Submissions.Where(c => c.ConferenceId == item.ConferenceId && c.ReviewedBy == reviewerId.UserId);
+                    var submissions = entity.Submissions.Where(c => c.ConferenceId == item.ConferenceId && c.ReviewedBy == reviewerId.UserId && (c.FullPaperStatus == Constant.FullPaperStatus.FormatChecked || c.FullPaperStatus == Constant.FullPaperStatus.Revised));
                     foreach (var subItem in submissions)
                     {
                         ViewModelSubmission newSubmission = new ViewModelSubmission();
