@@ -60,6 +60,52 @@ namespace Icasie.Helper
             }
         }
 
+        public static string SendEmailResetPasswordSuccess(string emailTo, string fullName, string password)
+        {
+            using (var client = new SmtpClient(ConfigurationManager.AppSettings["SmtpServerHost"], int.Parse(ConfigurationManager.AppSettings["SmtpServerPort"])))
+            {
+
+                client.EnableSsl = false;
+                client.UseDefaultCredentials = false;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                NetworkCredential basicCredential = new NetworkCredential(ConfigurationManager.AppSettings["SmtpUser"], ConfigurationManager.AppSettings["SmtpPassword"]);
+                client.Credentials = basicCredential;
+                var msg = new MailMessage { From = new MailAddress(ConfigurationManager.AppSettings["AdminSenderEmail"], ConfigurationManager.AppSettings["AdminSenderName"]) };
+                msg.To.Add(new MailAddress(emailTo));
+                msg.Priority = MailPriority.Normal;
+                msg.Subject = "ICASIE Password Change";
+
+                // Mail Message Body
+                var emailContent = new StringBuilder();
+                emailContent.AppendLine("ICASIE user account information:");
+                emailContent.AppendLine("=================================");
+                emailContent.AppendLine();
+                emailContent.AppendLine("Dear " + fullName + ",");
+                emailContent.AppendLine();
+                emailContent.AppendLine("You have been reset your password on ICASIE.");
+                emailContent.AppendLine();
+                emailContent.AppendLine("Your login is :");
+                emailContent.AppendLine();
+                emailContent.AppendLine(emailTo);
+                emailContent.AppendLine();
+                emailContent.AppendLine("Below is your temporary password for ICASIE:");
+                emailContent.AppendLine();
+                emailContent.AppendLine(password);
+                emailContent.AppendLine();
+                emailContent.AppendLine("If you have any queries please email " + ConfigurationManager.AppSettings["AdminSenderEmail"]);
+                emailContent.AppendLine();
+                emailContent.AppendLine("Thanks");
+                emailContent.AppendLine();
+                emailContent.AppendLine("The ICASIE Team");
+
+                msg.Body = emailContent.ToString();
+                client.Send(msg);
+                return emailTo;
+            }
+        }
+
+
         public static string SendEmailPasswordChange(string emailTo, string fullName, string password)
         {
             using (var client = new SmtpClient(ConfigurationManager.AppSettings["SmtpServerHost"], int.Parse(ConfigurationManager.AppSettings["SmtpServerPort"])))
@@ -88,6 +134,45 @@ namespace Icasie.Helper
                 emailContent.AppendLine("Your new password on ICASIE is:");
                 emailContent.AppendLine();
                 emailContent.AppendLine(password);
+                emailContent.AppendLine();
+                emailContent.AppendLine("If you have any queries please email " + ConfigurationManager.AppSettings["AdminSenderEmail"]);
+                emailContent.AppendLine();
+                emailContent.AppendLine("Thanks");
+                emailContent.AppendLine();
+                emailContent.AppendLine("The ICASIE Team");
+
+                msg.Body = emailContent.ToString();
+                client.Send(msg);
+                return emailTo;
+            }
+        }
+
+        public static string SendEmailPasswordReset(string emailTo, string fullName, string token)
+        {
+            using (var client = new SmtpClient(ConfigurationManager.AppSettings["SmtpServerHost"], int.Parse(ConfigurationManager.AppSettings["SmtpServerPort"])))
+            {
+
+                client.EnableSsl = false;
+                client.UseDefaultCredentials = false;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                NetworkCredential basicCredential = new NetworkCredential(ConfigurationManager.AppSettings["SmtpUser"], ConfigurationManager.AppSettings["SmtpPassword"]);
+                client.Credentials = basicCredential;
+                var msg = new MailMessage { From = new MailAddress(ConfigurationManager.AppSettings["AdminSenderEmail"], ConfigurationManager.AppSettings["AdminSenderName"]) };
+                msg.To.Add(new MailAddress(emailTo));
+                msg.Priority = MailPriority.Normal;
+                msg.Subject = "ICASIE Password Reset";
+
+                // Mail Message Body
+                var emailContent = new StringBuilder();
+                emailContent.AppendLine("ICASIE user account information:");
+                emailContent.AppendLine("=================================");
+                emailContent.AppendLine();
+                emailContent.AppendLine("Dear " + fullName + ",");
+                emailContent.AppendLine();
+                emailContent.AppendLine("Please click below link to reset your password");
+                emailContent.AppendLine();
+                emailContent.AppendLine("www.icasieregistration.com/Login/Reset/" + token);
                 emailContent.AppendLine();
                 emailContent.AppendLine("If you have any queries please email " + ConfigurationManager.AppSettings["AdminSenderEmail"]);
                 emailContent.AppendLine();

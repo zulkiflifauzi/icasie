@@ -31,5 +31,6 @@ namespace Icasie.Repositories
         public DbSet<Submission> Submissions { get; set; }
         public DbSet<SubTheme> SubThemes { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<ResetPassword> ResetPasswords { get; set; }
     }
 }

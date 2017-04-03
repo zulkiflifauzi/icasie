@@ -56,7 +56,16 @@
         <div class="form-group">
             @Html.Label("Total Payment", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <span id="total-payment" style="color:green;font-weight:bold">US$ 0</span>
+                <span id="total-payment" style="color:green;font-weight:bold">US$ 0</span> @if (ViewData["IsIndonesian"] == "false") { <span style="color:red" id="total-payment-idr"></span> }
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Upload Payment Evidence", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <label class="btn btn-default btn-file">
+                    <input accept="application/pdf" name="payment" id="payment" type="file" />
+                </label>
+                <br />@Html.ValidationMessage("payment")
             </div>
         </div>
         <div class="form-group">
@@ -64,9 +73,9 @@
             <div class="col-md-10">
                 @Html.CheckBoxFor(model => model.TermsAgreement)
                 @Html.ValidationMessageFor(model => model.TermsAgreement) <br />
-                I have read <a href="/Content/agreement.pdf">this agreement</a> and acknowledge that I have been informed of payment deadlines and regulations pertaining to conference payments. I agree to make on-time payments, and will reference the ICASIE 2017 website (http://www.icasie.its.ac.id/) for additional guidance on paper submission regulations and payment rules.
+                I have read this <span style="color:red"><a href="/Content/IOPPolicies.pdf">"Conference & IOP Proceeding"</a></span> and <span style="color:red"><a href="/Content/IcasiePolicies.pdf">"Conference & Icasie Proceeding"</a></span> agreement pertaining to conference rules. I agree to obey all policies, and will reference the ICASIE 2017 website (http://www.icasie.its.ac.id/) for additional guidance on paper submission regulations and policies.
 
-            </div>
+</div>
         </div>
         @Html.Hidden("id", ViewData["ConferenceId"])
 
@@ -112,6 +121,10 @@
             total += (coauthor * $("#CoAuthors").val());
 
             $("#total-payment").text("US$ " + total.toString());
+
+            if ("@ViewData["IsIndonesian"]" == "false") {
+                $("#total-payment-idr").text("(IDR$ " + (total * @Icasie.Helper.Constant.ExchangeRate).toString() + ", Exchange Rate: IDR " + @Icasie.Helper.Constant.ExchangeRate.ToString() + " = 1 USD)");
+            }
         }
 
     </script>

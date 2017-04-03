@@ -101,7 +101,7 @@ namespace Icasie.Controllers
 
             }
 
-            return RedirectToAction("Index", new { id = Constant.Role.Reviewer });
+            return RedirectToAction("Index", new { id = Constant.Role.FormatChecker });
         }
 
         [HttpPost]

@@ -14,6 +14,7 @@ namespace Icasie.Helper
         public const string NumberSuffix = "000";
         public const string Indonesia = "id";
         public const string SendEmailFail = "Sending email failed, please contact administrator";
+        public const int ExchangeRate = 13000;
 
         public static class NotificationMode
         {

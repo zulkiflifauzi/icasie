@@ -39,27 +39,31 @@
                 <br />@Html.ValidationMessage("file")
             </div>
         </div>
-        <div class="form-group">
-            @Html.Label("Co Authors", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CoAuthors, new { htmlAttributes = new { @class = "form-control payment-control", @type = "number", @value = "0" }, })
-                @Html.ValidationMessageFor(model => model.CoAuthors)
+        @if (Model.FullPaperStatus.Equals(Icasie.Helper.Constant.FullPaperStatus.Pending))
+        { 
+            <div class="form-group">
+                @Html.Label("Co Authors", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CoAuthors, new { htmlAttributes = new { @class = "form-control payment-control", @type = "number", @value = "0" }, })
+                    @Html.ValidationMessageFor(model => model.CoAuthors)
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.Label("Payment Type", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="radio" class="payment-control" id="paymentType" name="paymentType" value="1"> Conference & IOP Proceeding<br>
-                <input type="radio" class="payment-control" id="paymentType" name="paymentType" value="2"> Conference & Icasie Proceeding<br>
+            <div class="form-group">
+                @Html.Label("Payment Type", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="radio" class="payment-control" id="paymentType" name="paymentType" value="1"> Conference & IOP Proceeding<br>
+                    <input type="radio" class="payment-control" id="paymentType" name="paymentType" value="2"> Conference & Icasie Proceeding<br>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.Label("Total Payment", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <span id="total-payment" style="color:green;font-weight:bold">US$ 0</span>
+            <div class="form-group">
+                @Html.Label("Total Payment", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <span id="total-payment" style="color:green;font-weight:bold">US$ 0</span>
+                </div>
             </div>
-        </div>
+        }
+        
         @Html.Hidden("id", Model.SubmissionId)
 
         <div class="form-group">

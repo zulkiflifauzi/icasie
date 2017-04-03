@@ -14,6 +14,74 @@ namespace Icasie.Controllers
 {
     public class LoginController : Controller
     {
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [CaptchaValidator]
+        public ActionResult ForgotPassword(ViewModelResetPassword model, bool captchaValid)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            User user = new Repositories.User();
+
+            using (IcasieEntities entity = new IcasieEntities())
+            {
+                user = entity.Users.SingleOrDefault(c => c.Email.Equals(model.Email));
+
+                if (user == null)
+                {
+                    TempData["message"] = "We are not recognized the email you entered";
+                    return View();
+                }
+                    
+
+                ResetPassword reset = new ResetPassword();
+
+                reset.Token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                reset.UserId = user.UserId;
+                reset.ExpDate = DateTime.Now;
+
+                entity.ResetPasswords.Add(reset);
+                entity.SaveChanges();
+
+                System.Threading.Tasks.Task.Run(() => EmailHelper.SendEmailPasswordReset(user.Email, user.FirstName + " " + user.LastName, reset.Token));
+            }
+
+            
+            return View("ResetPasswordSuccess");
+        }
+
+        public ActionResult Reset(string id)
+        {
+            using (IcasieEntities entity = new IcasieEntities())
+            {
+                var reset = entity.ResetPasswords.SingleOrDefault(c => c.Token.Equals(id));
+
+                var user = entity.Users.SingleOrDefault(c => c.UserId == reset.UserId);
+
+                string randomPassword = Icasie.Helper.Helper.GenerateRandomGuidPassword().Substring(0, 10);
+
+                var random = new Random();
+                string salt = Icasie.Helper.Helper.CreateSalt(random.Next(10, 100));
+                string password = Icasie.Helper.Helper.CreatePasswordHash(randomPassword, salt);
+
+                user.Salt = salt;
+                user.Password = password;
+
+                entity.SaveChanges();
+
+                System.Threading.Tasks.Task.Run(() => EmailHelper.SendEmailResetPasswordSuccess(user.Email, user.FirstName + " " + user.LastName, randomPassword));
+
+            }
+
+            return View("ResetPasswordSuccess2");
+        }
 
         public ActionResult ChangePassword()      
         { 

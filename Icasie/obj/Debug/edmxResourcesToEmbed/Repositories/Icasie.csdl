@@ -35,6 +35,11 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Submission" EntitySet="Submissions" />
     </AssociationSet>
+    <EntitySet Name="ResetPasswords" EntityType="icasieModel.ResetPassword" />
+    <AssociationSet Name="FK_ResetPasswords_Users" Association="icasieModel.FK_ResetPasswords_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ResetPassword" EntitySet="ResetPasswords" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Conference">
     <Key>
@@ -150,6 +155,7 @@
     <NavigationProperty Name="Submissions" Relationship="icasieModel.FK_Submissions_Users" FromRole="User" ToRole="Submission" />
     <NavigationProperty Name="Submissions1" Relationship="icasieModel.FK_Submissions_Users1" FromRole="User" ToRole="Submission" />
     <NavigationProperty Name="Submissions2" Relationship="icasieModel.FK_Submissions_Users2" FromRole="User" ToRole="Submission" />
+    <NavigationProperty Name="ResetPasswords" Relationship="icasieModel.FK_ResetPasswords_Users" FromRole="User" ToRole="ResetPassword" />
   </EntityType>
   <Association Name="FK_Participants_Conferences">
     <End Type="icasieModel.Conference" Role="Conference" Multiplicity="1" />
@@ -232,6 +238,28 @@
       </Principal>
       <Dependent Role="Submission">
         <PropertyRef Name="ProofReaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ResetPassword">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Token" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ExpDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="icasieModel.FK_ResetPasswords_Users" FromRole="ResetPassword" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_ResetPasswords_Users">
+    <End Type="icasieModel.User" Role="User" Multiplicity="1" />
+    <End Type="icasieModel.ResetPassword" Role="ResetPassword" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="ResetPassword">
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

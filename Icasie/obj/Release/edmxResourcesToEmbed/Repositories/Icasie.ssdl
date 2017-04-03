@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="icasieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="icasieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Conferences">
     <Key>
       <PropertyRef Name="ConferenceId" />
@@ -34,6 +34,15 @@
     <Property Name="Number" Type="nvarchar" MaxLength="50" />
     <Property Name="PaymentStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="TotalPayment" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ResetPasswords">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Token" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ExpDate" Type="datetime" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Submissions">
     <Key>
@@ -70,6 +79,10 @@
     <Property Name="ProofReadingDate" Type="date" />
     <Property Name="PaymentVerificationDate" Type="date" />
     <Property Name="TermsAgreement" Type="bit" Nullable="false" />
+    <Property Name="FormatCheckingResult" Type="varbinary(max)" />
+    <Property Name="FormatCheckingResultFileName" Type="nvarchar(max)" />
+    <Property Name="FormatCheckerId" Type="int" />
+    <Property Name="FormatCheckingDate" Type="date" />
   </EntityType>
   <EntityType Name="SubThemes">
     <Key>
@@ -117,6 +130,18 @@
         <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="Participants">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ResetPasswords_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="ResetPasswords" Type="Self.ResetPasswords" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="ResetPasswords">
         <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
@@ -185,6 +210,7 @@
     <EntitySet Name="Conferences" EntityType="Self.Conferences" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Fees" EntityType="Self.Fees" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Participants" EntityType="Self.Participants" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ResetPasswords" EntityType="Self.ResetPasswords" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Submissions" EntityType="Self.Submissions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SubThemes" EntityType="Self.SubThemes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -195,6 +221,10 @@
     <AssociationSet Name="FK_Participants_Users" Association="Self.FK_Participants_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="Participants" EntitySet="Participants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ResetPasswords_Users" Association="Self.FK_ResetPasswords_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ResetPasswords" EntitySet="ResetPasswords" />
     </AssociationSet>
     <AssociationSet Name="FK_Submissions_Conferences" Association="Self.FK_Submissions_Conferences">
       <End Role="Conferences" EntitySet="Conferences" />

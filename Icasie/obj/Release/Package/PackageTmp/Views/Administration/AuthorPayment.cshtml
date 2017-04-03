@@ -86,8 +86,10 @@
                     <td>@abs.TotalPayment</td>
                     <td>@Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Payment }, new { @class = "btn btn-primary" })</td>
                     <td>@Html.Raw(abs.PaymentDate.Value.ToString(Icasie.Helper.Constant.DateFormat))</td>
-                    <td>@if(abs.FullPaperStatus.Equals(Icasie.Helper.Constant.FullPaperStatus.PaymentVerified)){ @Html.Raw(abs.PaymentVerificationDate.Value.ToString(Icasie.Helper.Constant.DateFormat))}</td>
-                    <td>@if(abs.FullPaperStatus.Equals(Icasie.Helper.Constant.FullPaperStatus.ReadyForPayment)) { @Html.ActionLink("Verify Payment", "VerifyPayment", "Administration", new { @id = abs.SubmissionId, @conferenceId = Model.ConferenceId }, new { @class = "btn btn-primary" }) }</td>
+                    <td>@if (abs.FullPaperStatus.Equals(Icasie.Helper.Constant.FullPaperStatus.PaymentVerified))
+                    { @Html.Raw(abs.PaymentVerificationDate.Value.ToString(Icasie.Helper.Constant.DateFormat))}</td>
+                    <td>@if (abs.FullPaperStatus.Equals(Icasie.Helper.Constant.FullPaperStatus.Pending))
+                    { @Html.ActionLink("Verify Payment", "VerifyPayment", "Administration", new { @id = abs.SubmissionId, @conferenceId = Model.ConferenceId }, new { @class = "btn btn-primary" }) }</td>
                 </tr>
             }
 
@@ -127,13 +129,11 @@
             });
         });
 
-        function SetId(obj)
-        {
+        function SetId(obj) {
             $("#Submission").val(obj);
         }
 
-        function Submit()
-        {
+        function Submit() {
             $("#assign-form").submit();
         }
 

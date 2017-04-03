@@ -20,6 +20,7 @@ namespace Icasie.Repositories
             this.Submissions = new HashSet<Submission>();
             this.Submissions1 = new HashSet<Submission>();
             this.Submissions2 = new HashSet<Submission>();
+            this.ResetPasswords = new HashSet<ResetPassword>();
         }
     
         public int UserId { get; set; }
@@ -41,5 +42,6 @@ namespace Icasie.Repositories
         public virtual ICollection<Submission> Submissions { get; set; }
         public virtual ICollection<Submission> Submissions1 { get; set; }
         public virtual ICollection<Submission> Submissions2 { get; set; }
+        public virtual ICollection<ResetPassword> ResetPasswords { get; set; }
     }
 }

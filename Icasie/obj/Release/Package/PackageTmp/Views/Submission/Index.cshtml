@@ -11,13 +11,14 @@
 
 
 @foreach (var item in Model)
-{ 
+{
     <div class="row">
         <h3 style="font-style:italic">@item.Name</h3>
-        
-        @if(item.PaperSubActive == true){
-            <a href="/Submission/AddFullPaper/@item.ConferenceId" class="btn btn-primary" >Add Paper</a>
-        } 
+
+        @if (item.PaperSubActive == true)
+        {
+            <a href="/Submission/AddFullPaper/@item.ConferenceId" class="btn btn-primary">Add Paper</a>
+        }
         else
         {
             <label style="color:red;font-weight:bold">Full Paper Submission has been closed</label>
@@ -55,20 +56,29 @@
                         Status
                     </th>
                     <th>
+                        Format Checking Result
+                    </th>
+                    <th>
+                        Format Checker
+                    </th>
+                    <th>
+                        Format Checker Date
+                    </th>
+                    <th>
                         Review Result
-                    </th> 
+                    </th>
                     <th>
                         Review Result 2
                     </th>
                     <th>
                         Review Result 3
-                    </th>      
+                    </th>
                     <th>
                         Reviewer
                     </th>
                     <th>
                         Review Date
-                    </th>     
+                    </th>
                     <th>
                         Proof Reading Result
                     </th>
@@ -77,7 +87,7 @@
                     </th>
                     <th>
                         Proof Reading Date
-                    </th>            
+                    </th>
                     <th>
                         Comment
                     </th>
@@ -105,10 +115,13 @@
                         <td>@abs.TotalPayment</td>
                         <td><a class="btn btn-primary" href="/Submission/Download/@abs.SubmissionId?type=@Icasie.Helper.Constant.DownloadType.FullPaper">View</a></td>
                         <td>@abs.FullPaperDate.Value.ToString(Icasie.Helper.Constant.DateFormat)</td>
-                        <td>@(abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.PaymentVerified ? Html.Raw("<font style='color:green;font-weight:bold'>" + abs.FullPaperStatus + "</font>") : Html.Raw(abs.FullPaperStatus))</td>
+                        <td>@(abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Accepted ? Html.Raw("<font style='color:green;font-weight:bold'>" + abs.FullPaperStatus + "</font>") : Html.Raw(abs.FullPaperStatus))</td>
+                        <td>@((abs.FormatCheckingResultFileName == null) ? Html.Raw("") : Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.FormatChecking }, new { @class = "btn btn-primary" }))</td>
+                        <td>@abs.FormatCheckerName</td>
+                        <td>@abs.FormatCheckingDateString</td>
                         <td>@((abs.FullPaperReviewFileName == null) ? Html.Raw("") : Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Review }, new { @class = "btn btn-primary" }))</td>
                         <td>@((abs.FullPaperReviewFileName2 == null) ? Html.Raw("") : Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Review2 }, new { @class = "btn btn-primary" }))</td>
-                        <td>@((abs.FullPaperReviewFileName3 ==  null) ? Html.Raw("") : Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Review3 }, new { @class = "btn btn-primary" }))</td>
+                        <td>@((abs.FullPaperReviewFileName3 == null) ? Html.Raw("") : Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Review3 }, new { @class = "btn btn-primary" }))</td>
                         <td>@abs.ReviewerName</td>
                         <td>@abs.ReviewDateString</td>
                         <td>@((abs.ProofReaderResultFileName == null) ? Html.Raw("") : Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.ProofReading }, new { @class = "btn btn-primary" }))</td>
@@ -117,7 +130,8 @@
                         <td>@abs.Comment</td>
                         <td>@((abs.PaymentDate.HasValue) ? Html.ActionLink("View", "Download", "Submission", new { @id = abs.SubmissionId, @type = Icasie.Helper.Constant.DownloadType.Payment }, new { @class = "btn btn-primary" }) : Html.Raw(""))</td>
                         <td>@((abs.PaymentDate.HasValue) ? Html.Raw(abs.PaymentDate.Value.ToString(Icasie.Helper.Constant.DateFormat)) : Html.Raw(""))</td>
-                        <td>@if (abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Pending || abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Revised)
+                        <td>
+                            @if (abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Pending || abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.FormatRevised || abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.Revised)
                             {
                                 <a class="btn btn-primary" href="/Submission/EditFullPaper/@abs.SubmissionId">Change</a>
                             }
@@ -125,16 +139,9 @@
                             {
                                 <a class="btn btn-primary" href="/Submission/EditProofReading/@abs.SubmissionId">Change</a>
                             }
-                            else if (abs.FullPaperStatus == Icasie.Helper.Constant.FullPaperStatus.ReadyForPayment)
-                            {
-                                if (!abs.PaymentDate.HasValue)
-                                {
-                                    <a class="btn btn-primary" href="/Submission/SubmitPayment/@abs.SubmissionId">Submit Payment</a>                
-                                } 
-                            }
-                               
-                            </td>
-                    </tr>
+
+                    </td>
+                </tr>
                 }
             </tbody>
 

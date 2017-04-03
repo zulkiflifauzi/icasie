@@ -256,12 +256,14 @@ namespace Icasie.Controllers
                 ViewData["Full"] = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.OverseasFull)).Price;
                 ViewData["Seminar"] = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.OverseasSeminar)).Price;
                 ViewData["Coauthor"] = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.OverseasCoauthor)).Price;
+                ViewData["IsIndonesian"] = "true";
             }
             else
             {
                 ViewData["Full"] = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.IndonesianFull)).Price;
                 ViewData["Seminar"] = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.IndonesianSeminar)).Price;
                 ViewData["Coauthor"] = fees.SingleOrDefault(c => c.Name.Equals(Constant.Fees.IndonesianCoauthor)).Price;
+                ViewData["IsIndonesian"] = "false";
             }
         }
 

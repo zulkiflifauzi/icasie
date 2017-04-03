@@ -42,6 +42,10 @@
     <EntitySetMapping Name="Submissions">
       <EntityTypeMapping TypeName="icasieModel.Submission">
         <MappingFragment StoreEntitySet="Submissions">
+          <ScalarProperty Name="FormatCheckingDate" ColumnName="FormatCheckingDate" />
+          <ScalarProperty Name="FormatCheckerId" ColumnName="FormatCheckerId" />
+          <ScalarProperty Name="FormatCheckingResultFileName" ColumnName="FormatCheckingResultFileName" />
+          <ScalarProperty Name="FormatCheckingResult" ColumnName="FormatCheckingResult" />
           <ScalarProperty Name="TermsAgreement" ColumnName="TermsAgreement" />
           <ScalarProperty Name="PaymentVerificationDate" ColumnName="PaymentVerificationDate" />
           <ScalarProperty Name="ProofReadingDate" ColumnName="ProofReadingDate" />
@@ -101,6 +105,16 @@
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ResetPasswords">
+      <EntityTypeMapping TypeName="icasieModel.ResetPassword">
+        <MappingFragment StoreEntitySet="ResetPasswords">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ExpDate" ColumnName="ExpDate" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

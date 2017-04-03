@@ -18,6 +18,8 @@
         <AssociationConnector Association="icasieModel.FK_Submissions_Users" />
         <AssociationConnector Association="icasieModel.FK_Submissions_Users1" />
         <AssociationConnector Association="icasieModel.FK_Submissions_Users2" />
+        <EntityTypeShape EntityType="icasieModel.ResetPassword" Width="1.5" PointX="3" PointY="10.875" />
+        <AssociationConnector Association="icasieModel.FK_ResetPasswords_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
