@@ -66,6 +66,7 @@ namespace Icasie.Controllers
                 var user = entity.Users.SingleOrDefault(c => c.UserId == reset.UserId);
 
                 string randomPassword = Icasie.Helper.Helper.GenerateRandomGuidPassword().Substring(0, 10);
+                randomPassword = randomPassword.Replace("/", "");
 
                 var random = new Random();
                 string salt = Icasie.Helper.Helper.CreateSalt(random.Next(10, 100));
