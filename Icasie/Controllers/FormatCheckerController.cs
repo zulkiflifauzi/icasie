@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -155,6 +156,13 @@ namespace Icasie.Controllers
                     {
                         sub.FormatCheckingResult = null;
                         sub.FormatCheckingResultFileName = null;
+
+                        var conferenceName = entity.Conferences.SingleOrDefault(c => c.ConferenceId == sub.ConferenceId).Name;
+                        var title = sub.Title;
+                        List<string> reviewerEmail = new List<string>();
+
+                        reviewerEmail.Add(entity.Users.SingleOrDefault(c => c.UserId == sub.ReviewedBy).Email);
+                        Task.Run(() => Helper.EmailHelper.SendEmailNotification(reviewerEmail, Constant.NotificationMode.AssignReviewer, conferenceName, title));
                     }
                     else
                     {

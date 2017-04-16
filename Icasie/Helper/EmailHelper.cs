@@ -219,6 +219,9 @@ namespace Icasie.Helper
                         case Constant.NotificationMode.AssignProofReader:
                             emailContent = AssignProofReader(msg, param1, param2);
                             break;
+                        case Constant.NotificationMode.AssignFormatChecker:
+                            emailContent = AssignFormatChecker(msg, param1, param2);
+                            break;
                     }                        
 
                     msg.Body = emailContent.ToString();
@@ -289,6 +292,25 @@ namespace Icasie.Helper
             emailContent.AppendLine("Hi,");
             emailContent.AppendLine();
             emailContent.AppendLine("You have been assigned a paper to proof read on " + param1 + " conference with title " + param2);
+            emailContent.AppendLine();
+            emailContent.AppendLine("Thanks");
+            emailContent.AppendLine();
+            emailContent.AppendLine("The ICASIE Team");
+            return emailContent;
+        }
+
+        private static StringBuilder AssignFormatChecker(MailMessage msg, string param1, string param2)
+        {
+            msg.Subject = "Paper Format Checking Assignment";
+
+            // Mail Message Body
+            var emailContent = new StringBuilder();
+            emailContent.AppendLine("Paper Format Checking Assignment:");
+            emailContent.AppendLine("=================================");
+            emailContent.AppendLine();
+            emailContent.AppendLine("Hi,");
+            emailContent.AppendLine();
+            emailContent.AppendLine("You have been assigned to check the formatting of a paper on " + param1 + " conference with title " + param2);
             emailContent.AppendLine();
             emailContent.AppendLine("Thanks");
             emailContent.AppendLine();

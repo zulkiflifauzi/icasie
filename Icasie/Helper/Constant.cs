@@ -21,6 +21,7 @@ namespace Icasie.Helper
             public const string NewSubmission = "NewSubmission";
             public const string AssignReviewer = "AssignReviewer";
             public const string AssignProofReader = "AssignProofReader";
+            public const string AssignFormatChecker = "AssignFormatChecker";
         }
 
         public static class EditPaperMode

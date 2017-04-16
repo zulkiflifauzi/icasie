@@ -43,7 +43,8 @@ namespace Icasie.Controllers
 
                 ResetPassword reset = new ResetPassword();
 
-                reset.Token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                var rawToken = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                reset.Token = rawToken.Replace("/", "");
                 reset.UserId = user.UserId;
                 reset.ExpDate = DateTime.Now;
 
@@ -66,7 +67,6 @@ namespace Icasie.Controllers
                 var user = entity.Users.SingleOrDefault(c => c.UserId == reset.UserId);
 
                 string randomPassword = Icasie.Helper.Helper.GenerateRandomGuidPassword().Substring(0, 10);
-                randomPassword = randomPassword.Replace("/", "");
 
                 var random = new Random();
                 string salt = Icasie.Helper.Helper.CreateSalt(random.Next(10, 100));

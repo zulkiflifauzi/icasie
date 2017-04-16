@@ -164,7 +164,7 @@ namespace Icasie.Controllers
         {
             string conferenceName = string.Empty;
             string title = string.Empty;
-            List<string> reviewerEmail = new List<string>();
+            List<string> formatCheckerEmail = new List<string>();
             using (var db = new IcasieEntities())
             {
                 var sub = db.Submissions.SingleOrDefault(c => c.SubmissionId == submission);
@@ -175,10 +175,10 @@ namespace Icasie.Controllers
                 sub.FormatCheckerId = formatChecker;
                 db.SaveChanges();
 
-                reviewerEmail.Add(db.Users.SingleOrDefault(c => c.UserId == reviewer).Email);
+                formatCheckerEmail.Add(db.Users.SingleOrDefault(c => c.UserId == formatChecker).Email);
             }
 
-            Task.Run(() => Helper.EmailHelper.SendEmailNotification(reviewerEmail, Constant.NotificationMode.AssignReviewer, conferenceName, title));
+            Task.Run(() => Helper.EmailHelper.SendEmailNotification(formatCheckerEmail, Constant.NotificationMode.AssignReviewer, conferenceName, title));
 
             return RedirectToAction("Assign");
         }
